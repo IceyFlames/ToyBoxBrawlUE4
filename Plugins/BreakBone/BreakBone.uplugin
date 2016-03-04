@@ -1,0 +1,24 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "BreakBone",
+	"Description": "Makes the ability to break bone constraints available to Blueprint.",
+	"Category": "Other",
+	"CreatedBy": "Jeff LaMarche",
+	"CreatedByURL": "http://martiancraft.com",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"Modules": [
+		{
+			"Name": "BreakBone",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	],
+	"EnabledByDefault": true,
+	"CanContainContent": false,
+	"IsBetaVersion": false,
+	"Installed": false
+}
