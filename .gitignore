@@ -40,9 +40,7 @@
 SourceArt/**/*.png
 SourceArt/**/*.tga
 
-#Ignore File Directories 
-[Ii]ntermediate/
-[Ss]aved/Logs/
+
 
 
 # Binary Files
