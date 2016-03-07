@@ -35,7 +35,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Properties")
 	EquipmentType _EquipmentType;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Properties", meta = (ToolTip = "If Type is Armour _NumofUses is treated as hp" ))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Properties", meta = (ToolTip = "If Type is Armour treat_NumofUses as hp" ))
 	int32 _NumOfUses;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Properties")
