@@ -41,7 +41,7 @@ public:
 	PlayerID _PlayerId;
 #pragma endregion
 
-#pragma region DamageProperties
+#pragma region Damage_Properties
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Damage")
 	int32 _LeftLegWS;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Damage")
@@ -63,7 +63,7 @@ public:
 	int32 _LeftArmHP;
 #pragma endregion
 
-#pragma region LimbActiveProperties
+#pragma region Limb_Active_Properties
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LimbsActive")
 	bool bLeftArmActive;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LimbsActive")
@@ -74,7 +74,19 @@ public:
 	bool bRightLegActive;
 #pragma endregion
 
-#pragma region AnimationProperties
+#pragma region Weapon_Equipping_Properties
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Equipment")
+	bool bLeftArmEquipped;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Equipment")
+	bool bRightArmEquipped;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Equipment")
+	bool bCanPickup;
+#pragma endregion
+
+
+#pragma region Animation_Properties
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animating")
 	bool bLeftPunch;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animating")
