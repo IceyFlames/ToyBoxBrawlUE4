@@ -36,3 +36,9 @@ void ARuthTestCharacter::SetPlayerID(PlayerID _id)
 {
 	_PlayerId = _id;
 }
+
+void ARuthTestCharacter::LimbTakeDamage(AActor* Actor, UPrimitiveComponent* OtherComponent, bool ActiveLimb, FName BoneName)
+{
+
+	return;
+}
