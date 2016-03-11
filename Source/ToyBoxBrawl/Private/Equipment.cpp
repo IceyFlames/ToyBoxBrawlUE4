@@ -9,7 +9,7 @@ AEquipment::AEquipment()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	
 }
 
 // Called when the game starts or when spawned
@@ -26,3 +26,23 @@ void AEquipment::Tick( float DeltaTime )
 
 }
 
+void AEquipment::EquipmentPickedUp()
+{
+	MeshObject->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
+	
+	if (BoxCollider != nullptr)
+	{
+		BoxCollider->ComponentTags.Remove(FName("PickUp"));
+		BoxCollider->ComponentTags.Add(FName("Weapon"));
+		return;
+	}
+
+	if (CapsuleCollider != nullptr)
+	{
+		CapsuleCollider->ComponentTags.Remove(FName("PickUp"));
+		CapsuleCollider->ComponentTags.Add(FName("Weapon"));
+		return;
+	}
+
+	return;
+}

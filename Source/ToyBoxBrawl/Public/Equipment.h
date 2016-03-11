@@ -29,6 +29,21 @@ public:
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
 
+	UFUNCTION(BlueprintCallable, Category = IteamEquipped)
+	void EquipmentPickedUp();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USkeletalMeshComponent* MeshObject;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UCapsuleComponent* CapsuleCollider;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UBoxComponent* BoxCollider;
+
+
+#pragma region Weapon_Properties
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Properties")
 	int32 _WeaponStrength;
 
@@ -43,4 +58,6 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Properties", meta = (ToolTip = "Has Weapon been picked up"))
 	bool _WeaponActive;
+
+#pragma endregion
 };
