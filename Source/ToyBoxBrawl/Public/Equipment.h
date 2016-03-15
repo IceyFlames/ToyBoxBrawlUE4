@@ -36,15 +36,26 @@ public:
 	USkeletalMeshComponent* MeshObject;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UStaticMeshComponent* StaticMeshObject;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UCapsuleComponent* CapsuleCollider;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UBoxComponent* BoxCollider;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USphereComponent* SphereCollider;
+	
+
 
 #pragma region Weapon_Properties
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Properties")
+	int32 _BaseDamage;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Properties")
 	int32 _WeaponStrength;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Properties")

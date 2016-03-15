@@ -16,7 +16,7 @@ AEquipment::AEquipment()
 void AEquipment::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	//_WeaponStrength = _BaseDamage;
 }
 
 // Called every frame
@@ -28,8 +28,12 @@ void AEquipment::Tick( float DeltaTime )
 
 void AEquipment::EquipmentPickedUp()
 {
-	MeshObject->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
+	if(MeshObject != nullptr)
+		MeshObject->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
 	
+	if(StaticMeshObject != nullptr)
+		StaticMeshObject->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
+
 	if (BoxCollider != nullptr)
 	{
 		BoxCollider->ComponentTags.Remove(FName("PickUp"));
@@ -41,6 +45,13 @@ void AEquipment::EquipmentPickedUp()
 	{
 		CapsuleCollider->ComponentTags.Remove(FName("PickUp"));
 		CapsuleCollider->ComponentTags.Add(FName("Weapon"));
+		return;
+	}
+
+	if (SphereCollider != nullptr)
+	{
+		SphereCollider->ComponentTags.Remove(FName("PickUp"));
+		SphereCollider->ComponentTags.Add(FName("Weapon"));
 		return;
 	}
 

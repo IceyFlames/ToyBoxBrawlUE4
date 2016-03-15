@@ -38,6 +38,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Collision)
 	void LimbTakeDamage(AActor* Actor, UPrimitiveComponent* OtherComponent, bool ActiveLimb, FName BoneName);
 
+	UPROPERTY(BlueprintReadWrite)
+	AActor* LeftHandWeapon;
+
+	UPROPERTY(BlueprintReadWrite)
+	AActor* RightHandWeapon;
+
 #pragma region Miscallaneous
 	//This is just a bidning for which id this player is and which collision filter to use
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Enum)

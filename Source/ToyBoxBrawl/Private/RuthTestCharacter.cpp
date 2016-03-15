@@ -2,7 +2,7 @@
 
 #include "ToyBoxBrawl.h"
 #include "RuthTestCharacter.h"
-
+#include "Equipment.h"
 
 // Sets default values
 ARuthTestCharacter::ARuthTestCharacter()
@@ -39,6 +39,12 @@ void ARuthTestCharacter::SetPlayerID(PlayerID _id)
 
 void ARuthTestCharacter::LimbTakeDamage(AActor* Actor, UPrimitiveComponent* OtherComponent, bool ActiveLimb, FName BoneName)
 {
+	ARuthTestCharacter* player = Cast<ARuthTestCharacter>(Actor);
+	AEquipment* Weapon = Cast<AEquipment>(Actor);
+
+	TArray<FName> Tags = OtherComponent->ComponentTags;
+		
+
 
 	return;
 }
