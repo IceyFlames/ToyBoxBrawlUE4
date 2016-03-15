@@ -32,20 +32,20 @@ public:
 	UFUNCTION(BlueprintCallable, Category = IteamEquipped)
 	void EquipmentPickedUp();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite)
 	USkeletalMeshComponent* MeshObject;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite)
 	UStaticMeshComponent* StaticMeshObject;
 
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite)
 	UCapsuleComponent* CapsuleCollider;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite)
 	UBoxComponent* BoxCollider;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite)
 	USphereComponent* SphereCollider;
 	
 
