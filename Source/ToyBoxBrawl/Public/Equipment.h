@@ -5,6 +5,7 @@
 #include "GameFramework/Actor.h"
 #include "Equipment.generated.h"
 
+
 UENUM(BlueprintType)
 enum class EquipmentType : uint8
 {
@@ -48,7 +49,8 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	USphereComponent* SphereCollider;
 	
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PickUp Rotation")
+	FVector Ruth_PickupRotation;
 
 #pragma region Weapon_Properties
 

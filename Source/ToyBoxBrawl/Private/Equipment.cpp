@@ -34,26 +34,31 @@ void AEquipment::EquipmentPickedUp()
 	if(StaticMeshObject != nullptr)
 		StaticMeshObject->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
 
+
+	
+
 	if (BoxCollider != nullptr)
 	{
-		BoxCollider->ComponentTags.Remove(FName("PickUp"));
+		BoxCollider->ComponentTags.Remove(FName("Pickup"));
 		BoxCollider->ComponentTags.Add(FName("Weapon"));
 		return;
 	}
 
 	if (CapsuleCollider != nullptr)
 	{
-		CapsuleCollider->ComponentTags.Remove(FName("PickUp"));
+		CapsuleCollider->ComponentTags.Remove(FName("Pickup"));
 		CapsuleCollider->ComponentTags.Add(FName("Weapon"));
 		return;
 	}
 
 	if (SphereCollider != nullptr)
 	{
-		SphereCollider->ComponentTags.Remove(FName("PickUp"));
+		SphereCollider->ComponentTags.Remove(FName("Pickup"));
 		SphereCollider->ComponentTags.Add(FName("Weapon"));
 		return;
 	}
 
+	
+	
 	return;
 }
