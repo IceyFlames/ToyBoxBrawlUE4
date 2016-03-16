@@ -33,6 +33,14 @@ public:
 	UFUNCTION(BlueprintCallable, Category = IteamEquipped)
 	void EquipmentPickedUp();
 
+	UFUNCTION(BlueprintCallable, Category = IteamEquipped)
+	void ObjectThrown();
+
+
+	UFUNCTION(BlueprintCallable, Category = IteamEquipped)
+	void Deweaponise();
+
+
 	UPROPERTY(BlueprintReadWrite)
 	USkeletalMeshComponent* MeshObject;
 	
@@ -51,6 +59,12 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PickUp Rotation")
 	FVector Ruth_PickupRotation;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Projectile Weapon")
+	bool _WeaponThrown;
+
+	float timer = .2f;
+	float countdown = 0;
 
 #pragma region Weapon_Properties
 

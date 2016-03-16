@@ -94,7 +94,6 @@ public:
 	bool bCanPickup;
 #pragma endregion
 
-
 #pragma region Animation_Properties
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animating")
 	bool bLeftPunch;
