@@ -31,7 +31,7 @@ void AEquipment::Tick( float DeltaTime )
 		
 		float forceStrength = GetVelocity().Size();
 		FString String = FString::SanitizeFloat(forceStrength);
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, String);
+		//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, String);
 
 		if (forceStrength < 125)
 			Deweaponise();
@@ -53,7 +53,7 @@ void AEquipment::Deweaponise()
 		MeshObject->ComponentTags.Add(FName("Pickup"));
 		_WeaponStrength = 0;
 		_WeaponThrown = false;
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Thrown Object: Deweaponised");
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Thrown Object: Deweaponised");
 		return;
 	}
 
@@ -64,7 +64,7 @@ void AEquipment::Deweaponise()
 		StaticMeshObject->ComponentTags.Add(FName("Pickup"));
 		_WeaponStrength = 0;
 		_WeaponThrown = false;
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Thrown Object: Deweaponised");
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Thrown Object: Deweaponised");
 		return;
 	}
 
