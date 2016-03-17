@@ -44,35 +44,60 @@ void AEquipment::Tick( float DeltaTime )
 
 void AEquipment::Deweaponise()
 {
-	if (BoxCollider != nullptr)
+
+
+	if (MeshObject != nullptr)
 	{
-		BoxCollider->ComponentTags.Remove(FName("Weapon"));
-		BoxCollider->ComponentTags.Add(FName("Pickup"));
+		
+		MeshObject->ComponentTags.Remove(FName("Weapon"));
+		MeshObject->ComponentTags.Add(FName("Pickup"));
 		_WeaponStrength = 0;
 		_WeaponThrown = false;
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Thrown Object: Deweaponised");
 		return;
 	}
 
-	if (CapsuleCollider != nullptr)
+	if (StaticMeshObject != nullptr)
 	{
-		CapsuleCollider->ComponentTags.Remove(FName("Weapon"));
-		CapsuleCollider->ComponentTags.Add(FName("Pickup"));
+		
+		StaticMeshObject->ComponentTags.Remove(FName("Weapon"));
+		StaticMeshObject->ComponentTags.Add(FName("Pickup"));
 		_WeaponStrength = 0;
 		_WeaponThrown = false;
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Thrown Object: Deweaponised");
 		return;
 	}
 
-	if(SphereCollider != nullptr)
-	{
-		SphereCollider->ComponentTags.Remove(FName("Weapon"));
-		SphereCollider->ComponentTags.Add(FName("Pickup"));
-		_WeaponStrength = 0;
-		_WeaponThrown = false;
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Thrown Object: Deweaponised");
-		return;
-	}
+
+	//if (BoxCollider != nullptr)
+	//{
+	//	BoxCollider->ComponentTags.Remove(FName("Weapon"));
+	//	BoxCollider->ComponentTags.Add(FName("Pickup"));
+	//	_WeaponStrength = 0;
+	//	_WeaponThrown = false;
+	//	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Thrown Object: Deweaponised");
+	//	return;
+	//}
+	//
+	//if (CapsuleCollider != nullptr)
+	//{
+	//	CapsuleCollider->ComponentTags.Remove(FName("Weapon"));
+	//	CapsuleCollider->ComponentTags.Add(FName("Pickup"));
+	//	_WeaponStrength = 0;
+	//	_WeaponThrown = false;
+	//	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Thrown Object: Deweaponised");
+	//	return;
+	//}
+	//
+	//if(SphereCollider != nullptr)
+	//{
+	//	SphereCollider->ComponentTags.Remove(FName("Weapon"));
+	//	SphereCollider->ComponentTags.Add(FName("Pickup"));
+	//	_WeaponStrength = 0;
+	//	_WeaponThrown = false;
+	//	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Thrown Object: Deweaponised");
+	//	return;
+	//}
 
 	
 }
@@ -93,35 +118,42 @@ void AEquipment::ObjectThrown()
 
 void AEquipment::EquipmentPickedUp()
 {
-	if(MeshObject != nullptr)
+	if (MeshObject != nullptr)
+	{
 		MeshObject->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
-	
-	if(StaticMeshObject != nullptr)
+		MeshObject->ComponentTags.Remove(FName("Pickup"));
+		MeshObject->ComponentTags.Add(FName("Weapon"));
+	}
+
+	if (StaticMeshObject != nullptr)
+	{
 		StaticMeshObject->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
-
-
+		StaticMeshObject->ComponentTags.Remove(FName("Pickup"));
+		StaticMeshObject->ComponentTags.Add(FName("Weapon"));
+	}
+	
 	
 
-	if (BoxCollider != nullptr)
-	{
-		BoxCollider->ComponentTags.Remove(FName("Pickup"));
-		BoxCollider->ComponentTags.Add(FName("Weapon"));
-		return;
-	}
-
-	if (CapsuleCollider != nullptr)
-	{
-		CapsuleCollider->ComponentTags.Remove(FName("Pickup"));
-		CapsuleCollider->ComponentTags.Add(FName("Weapon"));
-		return;
-	}
-
-	if (SphereCollider != nullptr)
-	{
-		SphereCollider->ComponentTags.Remove(FName("Pickup"));
-		SphereCollider->ComponentTags.Add(FName("Weapon"));
-		return;
-	}
+	//if (BoxCollider != nullptr)
+	//{
+	//	BoxCollider->ComponentTags.Remove(FName("Pickup"));
+	//	BoxCollider->ComponentTags.Add(FName("Weapon"));
+	//	return;
+	//}
+	//
+	//if (CapsuleCollider != nullptr)
+	//{
+	//	CapsuleCollider->ComponentTags.Remove(FName("Pickup"));
+	//	CapsuleCollider->ComponentTags.Add(FName("Weapon"));
+	//	return;
+	//}
+	//
+	//if (SphereCollider != nullptr)
+	//{
+	//	SphereCollider->ComponentTags.Remove(FName("Pickup"));
+	//	SphereCollider->ComponentTags.Add(FName("Weapon"));
+	//	return;
+	//}
 
 	return;
 }
