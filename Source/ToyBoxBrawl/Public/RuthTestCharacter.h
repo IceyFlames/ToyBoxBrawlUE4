@@ -14,10 +14,28 @@ enum class PlayerID : uint8
 	PLAYER4 UMETA(DisplayName = "Player4")
 };
 
+USTRUCT(BlueprintType)
+struct FLimb
+{
+	GENERATED_USTRUCT_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Limb")
+	int32 _WeaponDamage;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Limb")
+	int32 _LimbHP;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Limb")
+	bool _LimbActive;
+	UPROPERTY(BlueprintReadWrite, Category = "Limb")
+	FName _BoneName;
+};
+
 UCLASS()
 class TOYBOXBRAWL_API ARuthTestCharacter : public ACharacter
 {
 	GENERATED_BODY()
+
+	
+
 
 public:
 	// Sets default values for this character's properties
@@ -36,13 +54,26 @@ public:
 	void SetPlayerID(PlayerID _id);
 
 	UFUNCTION(BlueprintCallable, Category = Collision)
-	void LimbTakeDamage(AActor* Actor, UPrimitiveComponent* OtherComponent, bool ActiveLimb, FName BoneName);
+	void LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, FLimb _Limb);
 
 	UPROPERTY(BlueprintReadWrite)
 	AActor* LeftHandWeapon;
 
 	UPROPERTY(BlueprintReadWrite)
 	AActor* RightHandWeapon;
+
+#pragma region StructLimbs(Not using atm)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Struct)
+	FLimb LeftHandLimb;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Struct)
+	FLimb RightHandLimb;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Struct)
+	FLimb LeftLegLimb;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Struct)
+	FLimb RightLegLimb;
+#pragma endregion
+
+
 
 #pragma region Miscallaneous
 	//This is just a bidning for which id this player is and which collision filter to use

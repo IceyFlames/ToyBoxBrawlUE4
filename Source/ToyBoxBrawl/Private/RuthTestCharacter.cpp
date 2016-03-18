@@ -37,14 +37,61 @@ void ARuthTestCharacter::SetPlayerID(PlayerID _id)
 	_PlayerId = _id;
 }
 
-void ARuthTestCharacter::LimbTakeDamage(AActor* Actor, UPrimitiveComponent* OtherComponent, bool ActiveLimb, FName BoneName)
+void ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, FLimb _Limb)
 {
-	ARuthTestCharacter* player = Cast<ARuthTestCharacter>(Actor);
-	AEquipment* Weapon = Cast<AEquipment>(Actor);
 
-	TArray<FName> Tags = OtherComponent->ComponentTags;
-		
+	if (OtherActor != LeftHandWeapon && OtherActor != RightHandWeapon &&
+		OtherActor != this && _Limb._LimbActive)
+	{
 
+		ARuthTestCharacter* Player = Cast<ARuthTestCharacter>(OtherActor);
+		AEquipment* Equippable = Cast<AEquipment>(OtherActor);
 
+		TArray<FName> Tags = OtherComponent->ComponentTags;
+
+		for (signed int i = 0; i < Tags.Num(); i++)
+		{
+			FName Tag = Tags[i];
+
+			#pragma region Case: RightArm
+			if (Tag.IsEqual("RightArm"))
+			{
+				_Limb._LimbHP -= Player->RightHandLimb._WeaponDamage;
+				break;
+			}
+			#pragma endregion
+
+			#pragma region Case: LeftArm
+			if (Tag.IsEqual("LeftArm"))
+			{
+				_Limb._LimbHP -= Player->RightHandLimb._WeaponDamage;
+				break;
+			}
+			#pragma endregion
+
+			#pragma region Case: RightLeg
+			if (Tag.IsEqual("RightLeg"))
+			{
+				_Limb._LimbHP -= Player->RightHandLimb._WeaponDamage;
+				break;
+			}
+			#pragma endregion
+
+			#pragma region Case: LeftLeg
+			if (Tag.IsEqual("LeftLeg"))
+			{
+				_Limb._LimbHP -= Player->RightHandLimb._WeaponDamage;
+				break;
+			}
+			#pragma endregion
+
+			#pragma region Case: Weapon
+			if (Tag.IsEqual("Weapon"))
+			{
+				_Limb._LimbHP -= Equippable->_WeaponStrength;
+			}
+			#pragma endregion
+		}
+	}
 	return;
 }
