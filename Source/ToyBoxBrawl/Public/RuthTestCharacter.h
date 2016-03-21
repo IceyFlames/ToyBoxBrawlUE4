@@ -55,12 +55,23 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Collision)
 	void LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, FLimb _Limb);
+	
+	UFUNCTION(BlueprintCallable, Category = PhysicsBlend)
+	void RagDollBodyPart(FName bone);
+
+	UFUNCTION(BlueprintCallable, Category = PhysicsBlend)
+	void BlendBackBone(FName bone, float dt);
+
 
 	UPROPERTY(BlueprintReadWrite)
 	AActor* LeftHandWeapon;
 
 	UPROPERTY(BlueprintReadWrite)
 	AActor* RightHandWeapon;
+
+	UPROPERTY(BlueprintReadWrite)
+	USkeletalMeshComponent* CharacterMesh;
+	
 
 #pragma region StructLimbs(Not using atm)
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Struct)
@@ -72,8 +83,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Struct)
 	FLimb RightLegLimb;
 #pragma endregion
-
-
 
 #pragma region Miscallaneous
 	//This is just a bidning for which id this player is and which collision filter to use

@@ -47,15 +47,6 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	UStaticMeshComponent* StaticMeshObject;
 
-
-	UPROPERTY(BlueprintReadWrite)
-	UCapsuleComponent* CapsuleCollider;
-
-	UPROPERTY(BlueprintReadWrite)
-	UBoxComponent* BoxCollider;
-
-	UPROPERTY(BlueprintReadWrite)
-	USphereComponent* SphereCollider;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PickUp Rotation")
 	FVector Ruth_PickupRotation;

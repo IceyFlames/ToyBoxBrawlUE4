@@ -95,3 +95,14 @@ void ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent*
 	}
 	return;
 }
+
+void ARuthTestCharacter::RagDollBodyPart(FName bone)
+{
+	CharacterMesh->SetAllBodiesBelowSimulatePhysics(bone, true);
+	CharacterMesh->SetAllBodiesBelowPhysicsBlendWeight(bone, 1, false);
+}
+
+void ARuthTestCharacter::BlendBackBone(FName bone, float dt)
+{
+	CharacterMesh->SetAllBodiesBelowPhysicsBlendWeight(bone,FMath::FInterpTo(1, 0, dt, 1),false);
+}
