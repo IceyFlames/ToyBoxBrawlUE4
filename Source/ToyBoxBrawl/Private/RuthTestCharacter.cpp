@@ -37,7 +37,7 @@ void ARuthTestCharacter::SetPlayerID(PlayerID _id)
 	_PlayerId = _id;
 }
 
-void ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, FLimb _Limb)
+bool ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, FLimb _Limb)
 {
 
 	if (OtherActor != LeftHandWeapon && OtherActor != RightHandWeapon &&
@@ -92,8 +92,14 @@ void ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent*
 			}
 			#pragma endregion
 		}
+
+		if (_Limb._LimbHP < 0)
+		{
+			_Limb._LimbActive = false;
+			return true;
+		}
 	}
-	return;
+	return false;
 }
 
 void ARuthTestCharacter::RagDollBodyPart(FName bone)
@@ -106,3 +112,4 @@ void ARuthTestCharacter::BlendBackBone(FName bone, float dt)
 {
 	CharacterMesh->SetAllBodiesBelowPhysicsBlendWeight(bone,FMath::FInterpTo(1, 0, dt, 1),false);
 }
+

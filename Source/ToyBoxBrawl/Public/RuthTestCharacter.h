@@ -25,7 +25,7 @@ struct FLimb
 	int32 _LimbHP;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Limb")
 	bool _LimbActive;
-	UPROPERTY(BlueprintReadWrite, Category = "Limb")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Limb")
 	FName _BoneName;
 };
 
@@ -33,9 +33,6 @@ UCLASS()
 class TOYBOXBRAWL_API ARuthTestCharacter : public ACharacter
 {
 	GENERATED_BODY()
-
-	
-
 
 public:
 	// Sets default values for this character's properties
@@ -54,14 +51,13 @@ public:
 	void SetPlayerID(PlayerID _id);
 
 	UFUNCTION(BlueprintCallable, Category = Collision)
-	void LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, FLimb _Limb);
+	bool LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, FLimb _Limb);
 	
 	UFUNCTION(BlueprintCallable, Category = PhysicsBlend)
 	void RagDollBodyPart(FName bone);
 
 	UFUNCTION(BlueprintCallable, Category = PhysicsBlend)
 	void BlendBackBone(FName bone, float dt);
-
 
 	UPROPERTY(BlueprintReadWrite)
 	AActor* LeftHandWeapon;
