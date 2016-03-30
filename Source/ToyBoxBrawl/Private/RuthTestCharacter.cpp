@@ -32,74 +32,91 @@ void ARuthTestCharacter::SetupPlayerInputComponent(class UInputComponent* InputC
 
 }
 
-void ARuthTestCharacter::SetPlayerID(PlayerID _id)
-{
-	_PlayerId = _id;
-}
 
-bool ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, FLimb _Limb)
+DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, FLimb _Limb, FLimb& _LimbOut)
 {
+	
+	int LimbsCurrentHp = _Limb._LimbHP;
 
 	if (OtherActor != LeftHandWeapon && OtherActor != RightHandWeapon &&
 		OtherActor != this && _Limb._LimbActive)
 	{
+		
 
 		ARuthTestCharacter* Player = Cast<ARuthTestCharacter>(OtherActor);
 		AEquipment* Equippable = Cast<AEquipment>(OtherActor);
 
 		TArray<FName> Tags = OtherComponent->ComponentTags;
 
-		for (signed int i = 0; i < Tags.Num(); i++)
+		for (int i = 0; i < Tags.Num(); i++)
 		{
 			FName Tag = Tags[i];
 
-			#pragma region Case: RightArm
 			if (Tag.IsEqual("RightArm"))
 			{
 				_Limb._LimbHP -= Player->RightHandLimb._WeaponDamage;
 				break;
 			}
-			#pragma endregion
+
 
 			#pragma region Case: LeftArm
-			if (Tag.IsEqual("LeftArm"))
+			else if (Tag.IsEqual("LeftArm"))
 			{
-				_Limb._LimbHP -= Player->RightHandLimb._WeaponDamage;
+				
+				_Limb._LimbHP -= Player->LeftHandLimb._WeaponDamage;
 				break;
 			}
 			#pragma endregion
 
-			#pragma region Case: RightLeg
-			if (Tag.IsEqual("RightLeg"))
+			#pragma region RightLeg
+			else if (Tag.IsEqual("RightLeg"))
 			{
-				_Limb._LimbHP -= Player->RightHandLimb._WeaponDamage;
+				_Limb._LimbHP -= Player->RightLegLimb._WeaponDamage;	
 				break;
 			}
 			#pragma endregion
 
 			#pragma region Case: LeftLeg
-			if (Tag.IsEqual("LeftLeg"))
+			else if (Tag.IsEqual("LeftLeg"))
 			{
-				_Limb._LimbHP -= Player->RightHandLimb._WeaponDamage;
+				_Limb._LimbHP -= Player->LeftLegLimb._WeaponDamage;
 				break;
 			}
 			#pragma endregion
 
 			#pragma region Case: Weapon
-			if (Tag.IsEqual("Weapon"))
+			else if (Tag.IsEqual("Weapon"))
 			{
 				_Limb._LimbHP -= Equippable->_WeaponStrength;
+				break;
+				
 			}
 			#pragma endregion
 		}
 
+		_LimbOut = _Limb;
+
 		if (_Limb._LimbHP < 0)
 		{
 			_Limb._LimbActive = false;
-			return true;
+			return DamageCollisionType::DISMEMBERED;
 		}
+
+
+		if (LimbsCurrentHp == _Limb._LimbHP)
+		{
+			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("No Damage")));
+			return DamageCollisionType::NODAMAGE;
+		}
+
+		else
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Current HP: %i"), _Limb._LimbHP));
+			return DamageCollisionType::DAMAGED;
+		}
+		
 	}
-	return false;
+	return DamageCollisionType::NODAMAGE;
 }
 
 void ARuthTestCharacter::RagDollBodyPart(FName bone)

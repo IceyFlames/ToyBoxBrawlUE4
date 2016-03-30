@@ -6,12 +6,11 @@
 #include "RuthTestCharacter.generated.h"
 
 UENUM(BlueprintType)
-enum class PlayerID : uint8
+enum class DamageCollisionType : uint8
 {
-	PLAYER1 UMETA(DisplayName = "Player1"),
-	PLAYER2 UMETA(DisplayName = "Player2"),
-	PLAYER3 UMETA(DisplayName = "Player3"),
-	PLAYER4 UMETA(DisplayName = "Player4")
+	NODAMAGE UMETA(DisplayName = "NODAMAGE"),
+	DAMAGED UMETA(DisplayName = "DAMAGED"),
+	DISMEMBERED UMETA(DisplayName = "DISMEMBERED"),
 };
 
 USTRUCT(BlueprintType)
@@ -27,6 +26,9 @@ struct FLimb
 	bool _LimbActive;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Limb")
 	FName _BoneName;
+
+	void SubtractHealth(int val) { _LimbHP -= val; }
+	
 };
 
 UCLASS()
@@ -47,11 +49,9 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	
-	UFUNCTION(BlueprintCallable, Category = Playertag)
-	void SetPlayerID(PlayerID _id);
 
 	UFUNCTION(BlueprintCallable, Category = Collision)
-	bool LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, FLimb _Limb);
+	DamageCollisionType LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, FLimb _Limb, FLimb& _LimbOut);
 	
 	UFUNCTION(BlueprintCallable, Category = PhysicsBlend)
 	void RagDollBodyPart(FName bone);
@@ -78,12 +78,6 @@ public:
 	FLimb LeftLegLimb;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Struct)
 	FLimb RightLegLimb;
-#pragma endregion
-
-#pragma region Miscallaneous
-	//This is just a bidning for which id this player is and which collision filter to use
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Enum)
-	PlayerID _PlayerId;
 #pragma endregion
 
 #pragma region Damage_Properties
