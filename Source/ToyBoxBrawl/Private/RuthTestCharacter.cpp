@@ -33,7 +33,7 @@ void ARuthTestCharacter::SetupPlayerInputComponent(class UInputComponent* InputC
 }
 
 
-DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, FLimb _Limb, FLimb& _LimbOut)
+DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, UPARAM(ref)FLimb& _Limb)
 {
 	
 	int LimbsCurrentHp = _Limb._LimbHP;
@@ -94,7 +94,6 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 			#pragma endregion
 		}
 
-		_LimbOut = _Limb;
 
 		if (_Limb._LimbHP < 0)
 		{
@@ -111,7 +110,7 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 
 		else
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Current HP: %i"), _Limb._LimbHP));
+			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Current HP: %i"), _Limb._LimbHP, _Limb._BoneName));
 			return DamageCollisionType::DAMAGED;
 		}
 		

@@ -51,7 +51,7 @@ public:
 	
 
 	UFUNCTION(BlueprintCallable, Category = Collision)
-	DamageCollisionType LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, FLimb _Limb, FLimb& _LimbOut);
+	DamageCollisionType LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, UPARAM(ref)FLimb& _Limb);
 	
 	UFUNCTION(BlueprintCallable, Category = PhysicsBlend)
 	void RagDollBodyPart(FName bone);
@@ -80,38 +80,6 @@ public:
 	FLimb RightLegLimb;
 #pragma endregion
 
-#pragma region Damage_Properties
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Damage")
-	int32 _LeftLegWS;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Damage")
-	int32 _RightLegWS;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Damage")
-	int32 _RightArmWS;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Damage")
-	int32 _LeftArmWS;
-#pragma endregion
-
-#pragma region HealthProperties
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
-	int32 _LeftLegHP;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
-	int32 _RightLegHP;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
-	int32 _RightArmHP;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
-	int32 _LeftArmHP;
-#pragma endregion
-
-#pragma region Limb_Active_Properties
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LimbsActive")
-	bool bLeftArmActive;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LimbsActive")
-	bool bRightArmActive;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LimbsActive")
-	bool bLeftLegActive;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LimbsActive")
-	bool bRightLegActive;
-#pragma endregion
 
 #pragma region Weapon_Equipping_Properties
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Equipment")
