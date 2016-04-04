@@ -43,7 +43,7 @@ class TOYBOXBRAWL_API UGameInstanceTBB : public UGameInstance
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerGameInstance")
-	TArray<FPlayerCharacter> _Players;
+	TArray<FPlayerCharacter> _TPlayers;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerCharacter")
 	int32 _PlayerNum = 2;
