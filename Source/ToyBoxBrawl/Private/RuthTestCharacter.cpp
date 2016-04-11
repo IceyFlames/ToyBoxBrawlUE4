@@ -118,6 +118,79 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 	return DamageCollisionType::NODAMAGE;
 }
 
+void TorsoTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, float _DamageAmount);
+{
+
+	if (OtherActor != LeftHandWeapon && OtherActor != RightHandWeapon &&
+		OtherActor != this && _Limb._LimbActive)
+	{
+		int AmountOfActiveLimbs = 0;
+
+		ARuthTestCharacter* Player = Cast<ARuthTestCharacter>(OtherActor);
+		AEquipment* Equippable = Cast<AEquipment>(OtherActor);
+
+		TArray<FName> Tags = OtherComponent->ComponentTags;
+
+		int DistributedDamage = 0;
+
+#pragma region AmountOfLimbsActive
+		if (LeftHandLimb._LimbActive) { AmountOfActiveLimbs += 1; }
+		if (RightHandLimb._LimbActive) { AmountOfActiveLimbs += 1; }
+		if (LeftLegLimb._LimbActive) { AmountOfActiveLimbs += 1; }
+		if (RightLegLimb._LimbActive) { AmountOfActiveLimbs += 1; }
+#pragma endregion
+
+		for (int i = 0; i < Tags.Num(); i++)
+		{
+			FName Tag = Tags[i];
+
+			if (Tag.IsEqual("RightArm"))
+			{
+				DistributedDamage = Player->RightHandLimb._WeaponDamage / AmountOfActiveLimbs;
+				break;
+			}
+
+
+#pragma region Case: LeftArm
+			else if (Tag.IsEqual("LeftArm"))
+			{
+
+				DistributedDamage = Player->LeftHandLimb._WeaponDamage / AmountOfActiveLimbs;
+				break;
+			}
+#pragma endregion
+
+#pragma region RightLeg
+			else if (Tag.IsEqual("RightLeg"))
+			{
+				DistributedDamage = Player->RightLegLimb._WeaponDamage / AmountOfActiveLimbs;
+				break;
+			}
+#pragma endregion
+
+#pragma region Case: LeftLeg
+			else if (Tag.IsEqual("LeftLeg"))
+			{
+				DistributedDamage = Player->LeftLegLimb._WeaponDamage / AmountOfActiveLimbs;
+				break;
+			}
+#pragma endregion
+
+#pragma region Case: Weapon
+			else if (Tag.IsEqual("Weapon"))
+			{
+				DistributedDamage = Equippable->_WeaponStrength / AmountOfActiveLimbs;
+				break;
+
+			}
+#pragma endregion
+		}
+
+
+
+	}
+}
+
 void ARuthTestCharacter::RagDollBodyPart(FName bone)
 {
 	CharacterMesh->SetAllBodiesBelowSimulatePhysics(bone, true);

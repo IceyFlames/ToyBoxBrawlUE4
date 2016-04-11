@@ -19,15 +19,15 @@ struct FLimb
 	GENERATED_USTRUCT_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Limb")
-	int32 _WeaponDamage;
+	float _WeaponDamage;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Limb")
-	int32 _LimbHP;
+	float _LimbHP;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Limb")
 	bool _LimbActive;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Limb")
 	FName _BoneName;
 
-	void SubtractHealth(int val) { _LimbHP -= val; }
+	void SubtractHealth(float val) { _LimbHP -= val; }
 	
 };
 
@@ -53,6 +53,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Collision)
 	DamageCollisionType LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, UPARAM(ref)FLimb& _Limb);
 	
+	UFUNCTION(BlueprintCallable, Category = Collision)
+	void TorsoTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, float _DamageAmount);
+
+
 	UFUNCTION(BlueprintCallable, Category = PhysicsBlend)
 	void RagDollBodyPart(FName bone);
 

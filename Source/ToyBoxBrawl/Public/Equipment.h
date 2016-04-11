@@ -60,10 +60,10 @@ public:
 #pragma region Weapon_Properties
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Properties")
-	int32 _BaseDamage;
+	float _BaseDamage;
 
 	UPROPERTY(BlueprintReadWrite, Category = "Properties")
-	int32 _WeaponStrength;
+	float _WeaponStrength;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Properties")
 	EquipmentType _EquipmentType;
