@@ -36,7 +36,7 @@ void ARuthTestCharacter::SetupPlayerInputComponent(class UInputComponent* InputC
 DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, UPARAM(ref)FLimb& _Limb)
 {
 	
-	int LimbsCurrentHp = _Limb._LimbHP;
+	float LimbsCurrentHp = _Limb._LimbHP;
 
 	if (OtherActor != LeftHandWeapon && OtherActor != RightHandWeapon &&
 		OtherActor != this && _Limb._LimbActive)
