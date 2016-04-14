@@ -51,7 +51,7 @@ void AEquipment::Deweaponise()
 		
 		MeshObject->ComponentTags.Remove(FName("Weapon"));
 		MeshObject->ComponentTags.Add(FName("Pickup"));
-		_WeaponStrength = 0;
+		_WeaponStrength = 0.0f;
 		_WeaponThrown = false;
 		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Thrown Object: Deweaponised");
 		return;
@@ -62,7 +62,7 @@ void AEquipment::Deweaponise()
 		
 		StaticMeshObject->ComponentTags.Remove(FName("Weapon"));
 		StaticMeshObject->ComponentTags.Add(FName("Pickup"));
-		_WeaponStrength = 0;
+		_WeaponStrength = 0.0f;
 		_WeaponThrown = false;
 		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Thrown Object: Deweaponised");
 		return;
@@ -111,7 +111,7 @@ void AEquipment::ObjectThrown()
 		StaticMeshObject->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Block);
 
 	_WeaponThrown = true;
-	_WeaponStrength = 0;
+	_WeaponStrength = 0.0f;
 
 	countdown = timer;
 }

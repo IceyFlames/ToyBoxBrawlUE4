@@ -71,7 +71,7 @@ public:
 
 	UPROPERTY(BlueprintReadWrite)
 	USkeletalMeshComponent* CharacterMesh;
-	
+
 
 #pragma region StructLimbs(Not using atm)
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Struct)
