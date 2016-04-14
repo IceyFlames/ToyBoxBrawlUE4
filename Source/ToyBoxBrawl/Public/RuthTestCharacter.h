@@ -17,8 +17,10 @@ USTRUCT(BlueprintType)
 struct FLimb
 {
 	GENERATED_USTRUCT_BODY()
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Limb")
+	float _BaseDamage;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Limb")
 	float _WeaponDamage;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Limb")
 	float _LimbHP;
