@@ -75,6 +75,11 @@ public:
 	USkeletalMeshComponent* CharacterMesh;
 
 
+#pragma region HitStrings
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Collision Animation")
+	TArray<FString> HitStrings;
+#pragma endregion
+
 #pragma region StructLimbs(Not using atm)
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Struct)
 	FLimb LeftHandLimb;
