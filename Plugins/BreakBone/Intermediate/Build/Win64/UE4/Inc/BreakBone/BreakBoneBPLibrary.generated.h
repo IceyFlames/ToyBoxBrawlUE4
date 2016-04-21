@@ -15,7 +15,7 @@ struct FVector;
 #endif
 #define BREAKBONE_BreakBoneBPLibrary_generated_h
 
-#define ToyBoxBrawlUE4_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_11_RPC_WRAPPERS \
+#define Toy_Box_Brawl_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_11_RPC_WRAPPERS \
  \
 	DECLARE_FUNCTION(execGetBoneLocation) \
 	{ \
@@ -37,7 +37,7 @@ struct FVector;
 	}
 
 
-#define ToyBoxBrawlUE4_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_11_RPC_WRAPPERS_NO_PURE_DECLS \
+#define Toy_Box_Brawl_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_11_RPC_WRAPPERS_NO_PURE_DECLS \
  \
 	DECLARE_FUNCTION(execGetBoneLocation) \
 	{ \
@@ -59,7 +59,7 @@ struct FVector;
 	}
 
 
-#define ToyBoxBrawlUE4_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_11_INCLASS_NO_PURE_DECLS \
+#define Toy_Box_Brawl_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_11_INCLASS_NO_PURE_DECLS \
 	private: \
 	static void StaticRegisterNativesUBreakBoneBPLibrary(); \
 	friend BREAKBONE_API class UClass* Z_Construct_UClass_UBreakBoneBPLibrary(); \
@@ -70,7 +70,7 @@ struct FVector;
 	enum {IsIntrinsic=COMPILED_IN_INTRINSIC};
 
 
-#define ToyBoxBrawlUE4_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_11_INCLASS \
+#define Toy_Box_Brawl_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_11_INCLASS \
 	private: \
 	static void StaticRegisterNativesUBreakBoneBPLibrary(); \
 	friend BREAKBONE_API class UClass* Z_Construct_UClass_UBreakBoneBPLibrary(); \
@@ -81,7 +81,7 @@ struct FVector;
 	enum {IsIntrinsic=COMPILED_IN_INTRINSIC};
 
 
-#define ToyBoxBrawlUE4_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_11_STANDARD_CONSTRUCTORS \
+#define Toy_Box_Brawl_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_11_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UBreakBoneBPLibrary(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UBreakBoneBPLibrary) \
@@ -93,7 +93,7 @@ private: \
 public:
 
 
-#define ToyBoxBrawlUE4_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_11_ENHANCED_CONSTRUCTORS \
+#define Toy_Box_Brawl_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_11_ENHANCED_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UBreakBoneBPLibrary(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()) : Super(ObjectInitializer) { }; \
 private: \
@@ -105,29 +105,29 @@ DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UBreakBoneBPLibrary); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UBreakBoneBPLibrary)
 
 
-#define ToyBoxBrawlUE4_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_8_PROLOG
-#define ToyBoxBrawlUE4_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_11_GENERATED_BODY_LEGACY \
+#define Toy_Box_Brawl_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_8_PROLOG
+#define Toy_Box_Brawl_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_11_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	ToyBoxBrawlUE4_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_11_RPC_WRAPPERS \
-	ToyBoxBrawlUE4_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_11_INCLASS \
-	ToyBoxBrawlUE4_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_11_STANDARD_CONSTRUCTORS \
+	Toy_Box_Brawl_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_11_RPC_WRAPPERS \
+	Toy_Box_Brawl_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_11_INCLASS \
+	Toy_Box_Brawl_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_11_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define ToyBoxBrawlUE4_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_11_GENERATED_BODY \
+#define Toy_Box_Brawl_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_11_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	ToyBoxBrawlUE4_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_11_RPC_WRAPPERS_NO_PURE_DECLS \
-	ToyBoxBrawlUE4_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_11_INCLASS_NO_PURE_DECLS \
-	ToyBoxBrawlUE4_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_11_ENHANCED_CONSTRUCTORS \
+	Toy_Box_Brawl_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_11_RPC_WRAPPERS_NO_PURE_DECLS \
+	Toy_Box_Brawl_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_11_INCLASS_NO_PURE_DECLS \
+	Toy_Box_Brawl_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h_11_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID ToyBoxBrawlUE4_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h
+#define CURRENT_FILE_ID Toy_Box_Brawl_Plugins_BreakBone_Source_BreakBone_Public_BreakBoneBPLibrary_h
 
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
