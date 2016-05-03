@@ -78,6 +78,9 @@ public:
 #pragma region HitStrings
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Collision Animation")
 	TArray<float> HitValues;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Collision Animation")
+	TArray<AActor*> HitInvulnerability;
 #pragma endregion
 
 #pragma region StructLimbs(Not using atm)
