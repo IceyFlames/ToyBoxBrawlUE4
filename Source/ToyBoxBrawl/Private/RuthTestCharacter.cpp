@@ -122,7 +122,7 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 	return DamageCollisionType::NODAMAGE;
 }
 
-void ARuthTestCharacter::DamageTorso(AActor* OtherActor, UPrimitiveComponent* OtherComponent, float _DamageAmount)
+void ARuthTestCharacter::DamageTorso(AActor* OtherActor, UPrimitiveComponent* OtherComponent, float &aforce_out)
 {
 
 	if (OtherActor != LeftHandWeapon && OtherActor != RightHandWeapon &&
@@ -150,60 +150,55 @@ void ARuthTestCharacter::DamageTorso(AActor* OtherActor, UPrimitiveComponent* Ot
 			if (Tag.IsEqual("RightArm"))
 			{
 				DistributedDamage = Player->RightHandLimb._WeaponDamage / AmountOfActiveLimbs;
-				LeftHandLimb._LimbHP -= DistributedDamage;
-				RightHandLimb._LimbHP -= DistributedDamage;
-				LeftLegLimb._LimbHP -= DistributedDamage;
-				RightLegLimb._LimbHP -= DistributedDamage;
-
+				aforce_out = Player->_ArmKB;
 				break;
 			}
 
 
-
+#pragma region Case: LeftArm
 			else if (Tag.IsEqual("LeftArm"))
 			{
 
 				DistributedDamage = Player->LeftHandLimb._WeaponDamage / AmountOfActiveLimbs;
-				LeftHandLimb._LimbHP -= DistributedDamage;
-				RightHandLimb._LimbHP -= DistributedDamage;
-				LeftLegLimb._LimbHP -= DistributedDamage;
-				RightLegLimb._LimbHP -= DistributedDamage;
+				aforce_out = Player->_ArmKB;
 				break;
 			}
+#pragma endregion
 
+#pragma region RightLeg
 			else if (Tag.IsEqual("RightLeg"))
 			{
 				DistributedDamage = Player->RightLegLimb._WeaponDamage / AmountOfActiveLimbs;
-				LeftHandLimb._LimbHP -= DistributedDamage;
-				RightHandLimb._LimbHP -= DistributedDamage;
-				LeftLegLimb._LimbHP -= DistributedDamage;
-				RightLegLimb._LimbHP -= DistributedDamage;
+				aforce_out = Player->_LegKB;
 				break;
 			}
+#pragma endregion
 
+#pragma region Case: LeftLeg
 			else if (Tag.IsEqual("LeftLeg"))
 			{
 				DistributedDamage = Player->LeftLegLimb._WeaponDamage / AmountOfActiveLimbs;
-				LeftHandLimb._LimbHP -= DistributedDamage;
-				RightHandLimb._LimbHP -= DistributedDamage;
-				LeftLegLimb._LimbHP -= DistributedDamage;
-				RightLegLimb._LimbHP -= DistributedDamage;
+				aforce_out = Player->_LegKB;
 				break;
 			}
+#pragma endregion
 
-
-
+#pragma region Case: Weapon
 			else if (Tag.IsEqual("Weapon"))
 			{
 				DistributedDamage = Equippable->_WeaponStrength / AmountOfActiveLimbs;
-				LeftHandLimb._LimbHP -= DistributedDamage;
-				RightHandLimb._LimbHP -= DistributedDamage;
-				LeftLegLimb._LimbHP -= DistributedDamage;
-				RightLegLimb._LimbHP -= DistributedDamage;
+				aforce_out = Equippable->_KnockbackForce;
 				break;
 
 			}
+#pragma endregion
 		}
+
+		LeftHandLimb._LimbHP -= DistributedDamage;
+		RightLegLimb._LimbHP -= DistributedDamage;
+		LeftLegLimb._LimbHP -= DistributedDamage;
+		RightLegLimb._LimbHP -= DistributedDamage;
+
 	}
 }
 
