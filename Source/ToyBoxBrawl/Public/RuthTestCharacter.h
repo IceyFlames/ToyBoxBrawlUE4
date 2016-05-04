@@ -53,7 +53,7 @@ public:
 	
 
 	UFUNCTION(BlueprintCallable, Category = Collision)
-	DamageCollisionType LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, UPARAM(ref)FLimb& _Limb);
+	DamageCollisionType LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, UPARAM(ref)FLimb& _Limb, float &aforce_out);
 	
 	UFUNCTION(BlueprintCallable, Category = Collision)
 	void DamageTorso(AActor* OtherActor, UPrimitiveComponent* OtherComponent, float _DamageAmount);
@@ -76,21 +76,27 @@ public:
 
 
 #pragma region HitStrings
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Collision Animation")
-	TArray<float> HitValues;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	float _ArmKB;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	float _LegKB;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Collision Animation")
 	TArray<AActor*> HitInvulnerability;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Collision Animation")
+	TArray<float> HitValues;
 #pragma endregion
 
 #pragma region StructLimbs(Not using atm)
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Struct)
-	FLimb LeftHandLimb;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Struct)
-	FLimb RightHandLimb;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Struct)
-	FLimb LeftLegLimb;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Struct)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	FLimb LeftHandLimb;							
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	FLimb RightHandLimb;								
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	FLimb LeftLegLimb;									
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	FLimb RightLegLimb;
 #pragma endregion
 

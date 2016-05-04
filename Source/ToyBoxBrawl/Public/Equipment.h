@@ -68,11 +68,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Properties")
 	EquipmentType _EquipmentType;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Properties", meta = (ToolTip = "If Type is Armour treat_NumofUses as hp" ))
-	int32 _NumOfUses;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Properties")
-	bool _UnlimitedUses;
+	float _KnockbackForce;
+
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Properties", meta = (ToolTip = "If Type is Armour treat_NumofUses as hp" ))
+	//int32 _NumOfUses;
+	//
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Properties")
+	//bool _UnlimitedUses;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Properties", meta = (ToolTip = "Has Weapon been picked up"))
 	bool _WeaponActive;

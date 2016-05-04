@@ -31,7 +31,6 @@ void AEquipment::Tick( float DeltaTime )
 		
 		float forceStrength = GetVelocity().Size();
 		FString String = FString::SanitizeFloat(forceStrength);
-		//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, String);
 
 		if (forceStrength < 125)
 			Deweaponise();
@@ -53,7 +52,6 @@ void AEquipment::Deweaponise()
 		MeshObject->ComponentTags.Add(FName("Pickup"));
 		_WeaponStrength = 0.0f;
 		_WeaponThrown = false;
-		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Thrown Object: Deweaponised");
 		return;
 	}
 
@@ -64,40 +62,10 @@ void AEquipment::Deweaponise()
 		StaticMeshObject->ComponentTags.Add(FName("Pickup"));
 		_WeaponStrength = 0.0f;
 		_WeaponThrown = false;
-		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Thrown Object: Deweaponised");
 		return;
 	}
 
 
-	//if (BoxCollider != nullptr)
-	//{
-	//	BoxCollider->ComponentTags.Remove(FName("Weapon"));
-	//	BoxCollider->ComponentTags.Add(FName("Pickup"));
-	//	_WeaponStrength = 0;
-	//	_WeaponThrown = false;
-	//	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Thrown Object: Deweaponised");
-	//	return;
-	//}
-	//
-	//if (CapsuleCollider != nullptr)
-	//{
-	//	CapsuleCollider->ComponentTags.Remove(FName("Weapon"));
-	//	CapsuleCollider->ComponentTags.Add(FName("Pickup"));
-	//	_WeaponStrength = 0;
-	//	_WeaponThrown = false;
-	//	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Thrown Object: Deweaponised");
-	//	return;
-	//}
-	//
-	//if(SphereCollider != nullptr)
-	//{
-	//	SphereCollider->ComponentTags.Remove(FName("Weapon"));
-	//	SphereCollider->ComponentTags.Add(FName("Pickup"));
-	//	_WeaponStrength = 0;
-	//	_WeaponThrown = false;
-	//	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Thrown Object: Deweaponised");
-	//	return;
-	//}
 
 	
 }
@@ -131,29 +99,5 @@ void AEquipment::EquipmentPickedUp()
 		StaticMeshObject->ComponentTags.Remove(FName("Pickup"));
 		StaticMeshObject->ComponentTags.Add(FName("Weapon"));
 	}
-	
-	
-
-	//if (BoxCollider != nullptr)
-	//{
-	//	BoxCollider->ComponentTags.Remove(FName("Pickup"));
-	//	BoxCollider->ComponentTags.Add(FName("Weapon"));
-	//	return;
-	//}
-	//
-	//if (CapsuleCollider != nullptr)
-	//{
-	//	CapsuleCollider->ComponentTags.Remove(FName("Pickup"));
-	//	CapsuleCollider->ComponentTags.Add(FName("Weapon"));
-	//	return;
-	//}
-	//
-	//if (SphereCollider != nullptr)
-	//{
-	//	SphereCollider->ComponentTags.Remove(FName("Pickup"));
-	//	SphereCollider->ComponentTags.Add(FName("Weapon"));
-	//	return;
-	//}
-
 	return;
 }

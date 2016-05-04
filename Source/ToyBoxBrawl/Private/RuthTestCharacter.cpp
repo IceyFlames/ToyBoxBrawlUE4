@@ -33,7 +33,7 @@ void ARuthTestCharacter::SetupPlayerInputComponent(class UInputComponent* InputC
 }
 
 
-DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, UPARAM(ref)FLimb& _Limb)
+DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, UPARAM(ref)FLimb& _Limb, float &aforce_out)
 {
 	
 	float LimbsCurrentHp = _Limb._LimbHP;
@@ -54,6 +54,7 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 
 			if (Tag.IsEqual("RightArm"))
 			{
+				
 				_Limb._LimbHP -= Player->RightHandLimb._WeaponDamage;
 				break;
 			}
@@ -62,7 +63,7 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 			#pragma region Case: LeftArm
 			else if (Tag.IsEqual("LeftArm"))
 			{
-				
+				aforce_out = Player->_ArmKB;
 				_Limb._LimbHP -= Player->LeftHandLimb._WeaponDamage;
 				break;
 			}
@@ -71,6 +72,7 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 			#pragma region RightLeg
 			else if (Tag.IsEqual("RightLeg"))
 			{
+				aforce_out = Player->_LegKB;
 				_Limb._LimbHP -= Player->RightLegLimb._WeaponDamage;	
 				break;
 			}
@@ -79,6 +81,7 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 			#pragma region Case: LeftLeg
 			else if (Tag.IsEqual("LeftLeg"))
 			{
+				aforce_out = Player->_LegKB;
 				_Limb._LimbHP -= Player->LeftLegLimb._WeaponDamage;
 				break;
 			}
@@ -87,6 +90,7 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 			#pragma region Case: Weapon
 			else if (Tag.IsEqual("Weapon"))
 			{
+				aforce_out = Equippable->_KnockbackForce;
 				_Limb._LimbHP -= Equippable->_WeaponStrength;
 				break;
 				
