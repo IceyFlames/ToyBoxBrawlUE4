@@ -33,15 +33,24 @@ void ARuthTestCharacter::SetupPlayerInputComponent(class UInputComponent* InputC
 }
 
 
-DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, UPARAM(ref)FLimb& _Limb, float &aforce_out)
+DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, UPARAM(ref)FLimb& _Limb, bool DistributedDamage, float &aforce_out)
 {
 	
 	float LimbsCurrentHp = _Limb._LimbHP;
 
+
 	if (OtherActor != LeftHandWeapon && OtherActor != RightHandWeapon &&
 		OtherActor != this && _Limb._LimbActive)
 	{
+		float damageAmount = 0;
+
+		if (LeftHandLimb._LimbActive) { damageAmount += 1; }
+		if (RightHandLimb._LimbActive) { damageAmount += 1; }
+		if (LeftLegLimb._LimbActive) { damageAmount += 1; }
+		if (RightLegLimb._LimbActive) { damageAmount += 1; }
+
 		
+
 
 		ARuthTestCharacter* Player = Cast<ARuthTestCharacter>(OtherActor);
 		AEquipment* Equippable = Cast<AEquipment>(OtherActor);
@@ -54,7 +63,8 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 
 			if (Tag.IsEqual("RightArm"))
 			{
-				
+				aforce_out = Player->_ArmKB;
+				if (DistributedDamage) { _Limb._LimbHP -= Player->RightHandLimb._WeaponDamage / damageAmount; break; }
 				_Limb._LimbHP -= Player->RightHandLimb._WeaponDamage;
 				break;
 			}
@@ -64,6 +74,7 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 			else if (Tag.IsEqual("LeftArm"))
 			{
 				aforce_out = Player->_ArmKB;
+				if (DistributedDamage) { _Limb._LimbHP -= Player->LeftHandLimb._WeaponDamage / damageAmount; break; }
 				_Limb._LimbHP -= Player->LeftHandLimb._WeaponDamage;
 				break;
 			}
@@ -73,6 +84,7 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 			else if (Tag.IsEqual("RightLeg"))
 			{
 				aforce_out = Player->_LegKB;
+				if (DistributedDamage) { _Limb._LimbHP -= Player->RightLegLimb._WeaponDamage /damageAmount; break; }
 				_Limb._LimbHP -= Player->RightLegLimb._WeaponDamage;	
 				break;
 			}
@@ -82,6 +94,7 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 			else if (Tag.IsEqual("LeftLeg"))
 			{
 				aforce_out = Player->_LegKB;
+				if (DistributedDamage) { _Limb._LimbHP -= Player->LeftLegLimb._WeaponDamage / damageAmount; break; }
 				_Limb._LimbHP -= Player->LeftLegLimb._WeaponDamage;
 				break;
 			}
@@ -91,6 +104,7 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 			else if (Tag.IsEqual("Weapon"))
 			{
 				aforce_out = Equippable->_KnockbackForce;
+				if (DistributedDamage) { _Limb._LimbHP -= Equippable->_WeaponStrength / damageAmount; break; }
 				_Limb._LimbHP -= Equippable->_WeaponStrength;
 				break;
 				
@@ -122,85 +136,7 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 	return DamageCollisionType::NODAMAGE;
 }
 
-void ARuthTestCharacter::DamageTorso(AActor* OtherActor, UPrimitiveComponent* OtherComponent, float &aforce_out)
-{
 
-	if (OtherActor != LeftHandWeapon && OtherActor != RightHandWeapon &&
-		OtherActor != this)
-	{
-		int AmountOfActiveLimbs = 0;
-
-		ARuthTestCharacter* Player = Cast<ARuthTestCharacter>(OtherActor);
-		AEquipment* Equippable = Cast<AEquipment>(OtherActor);
-
-		TArray<FName> Tags = OtherComponent->ComponentTags;
-
-		int DistributedDamage = 0;
-
-		if (LeftHandLimb._LimbActive) { AmountOfActiveLimbs += 1; }
-		if (RightHandLimb._LimbActive) { AmountOfActiveLimbs += 1; }
-		if (LeftLegLimb._LimbActive) { AmountOfActiveLimbs += 1; }
-		if (RightLegLimb._LimbActive) { AmountOfActiveLimbs += 1; }
-
-
-		for (int i = 0; i < Tags.Num(); i++)
-		{
-			FName Tag = Tags[i];
-
-			if (Tag.IsEqual("RightArm"))
-			{
-				DistributedDamage = Player->RightHandLimb._WeaponDamage / AmountOfActiveLimbs;
-				aforce_out = Player->_ArmKB;
-				break;
-			}
-
-
-#pragma region Case: LeftArm
-			else if (Tag.IsEqual("LeftArm"))
-			{
-
-				DistributedDamage = Player->LeftHandLimb._WeaponDamage / AmountOfActiveLimbs;
-				aforce_out = Player->_ArmKB;
-				break;
-			}
-#pragma endregion
-
-#pragma region RightLeg
-			else if (Tag.IsEqual("RightLeg"))
-			{
-				DistributedDamage = Player->RightLegLimb._WeaponDamage / AmountOfActiveLimbs;
-				aforce_out = Player->_LegKB;
-				break;
-			}
-#pragma endregion
-
-#pragma region Case: LeftLeg
-			else if (Tag.IsEqual("LeftLeg"))
-			{
-				DistributedDamage = Player->LeftLegLimb._WeaponDamage / AmountOfActiveLimbs;
-				aforce_out = Player->_LegKB;
-				break;
-			}
-#pragma endregion
-
-#pragma region Case: Weapon
-			else if (Tag.IsEqual("Weapon"))
-			{
-				DistributedDamage = Equippable->_WeaponStrength / AmountOfActiveLimbs;
-				aforce_out = Equippable->_KnockbackForce;
-				break;
-
-			}
-#pragma endregion
-		}
-
-		LeftHandLimb._LimbHP -= DistributedDamage;
-		RightLegLimb._LimbHP -= DistributedDamage;
-		LeftLegLimb._LimbHP -= DistributedDamage;
-		RightLegLimb._LimbHP -= DistributedDamage;
-
-	}
-}
 
 
 void ARuthTestCharacter::RagDollBodyPart(FName bone)

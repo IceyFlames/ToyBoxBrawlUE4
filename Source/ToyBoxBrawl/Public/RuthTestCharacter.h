@@ -53,10 +53,9 @@ public:
 	
 
 	UFUNCTION(BlueprintCallable, Category = Collision)
-	DamageCollisionType LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, UPARAM(ref)FLimb& _Limb, float &aforce_out);
+	DamageCollisionType LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, UPARAM(ref)FLimb& _Limb, bool DistributedDamage, float &aforce_out);
 	
-	UFUNCTION(BlueprintCallable, Category = Collision)
-	void DamageTorso(AActor* OtherActor, UPrimitiveComponent* OtherComponent, float &aforce_out);
+
 
 
 	UFUNCTION(BlueprintCallable, Category = PhysicsBlend)
