@@ -81,6 +81,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	float _LegKB;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TargetSystem")
+	float _RotatePivot;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Collision Animation")
 	TArray<AActor*> HitInvulnerability;
 
