@@ -125,4 +125,9 @@ public:
 	bool bRightKick;
 #pragma endregion
 
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Limb")
+	bool bIsDead;
+
+
 };

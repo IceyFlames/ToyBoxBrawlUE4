@@ -38,7 +38,6 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 	
 	float LimbsCurrentHp = _Limb._LimbHP;
 
-
 	if (OtherActor != LeftHandWeapon && OtherActor != RightHandWeapon &&
 		OtherActor != this && _Limb._LimbActive)
 	{
