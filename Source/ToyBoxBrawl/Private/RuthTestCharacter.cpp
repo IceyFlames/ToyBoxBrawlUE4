@@ -135,8 +135,69 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 	return DamageCollisionType::NODAMAGE;
 }
 
+void ARuthTestCharacter::RetrieveClosestWeapon(AEquipment* &_WeaponRef)
+{
+	float LengthProduct = 9999999.0;
+	int Index = 0;
 
+	for (int i = 0; i < PickUpArray.Num(); i++) 
+	{
+		if (GetDistanceTo(PickUpArray[i]) < LengthProduct)
+		{
+			LengthProduct = GetDistanceTo(PickUpArray[i]);
+			Index = i;
+		}
+	}
 
+	_WeaponRef = PickUpArray[Index];
+
+}
+
+void ARuthTestCharacter::ThrowWeapon(AActor* WeaponRef, UPARAM(ref)bool &_ArmEquipped)
+{
+	
+	AEquipment* Equipment = Cast<AEquipment>(WeaponRef);
+	
+	if (Equipment->StaticMeshObject->IsValidLowLevel())
+	{
+		Equipment->StaticMeshObject->SetSimulatePhysics(true);
+		Equipment->DetachRootComponentFromParent(true);
+		Equipment->ObjectThrown();
+		_ArmEquipped = false;
+
+	}
+
+	if (Equipment->MeshObject->IsValidLowLevel())
+	{
+		Equipment->MeshObject->SetSimulatePhysics(true);
+		Equipment->DetachRootComponentFromParent(true);
+		Equipment->ObjectThrown();
+		_ArmEquipped = false;
+	}
+}
+
+void ARuthTestCharacter::EquipWeapon(UPoseableMeshComponent* HandSocket, AActor* WeaponRef, bool _ArmEquipped)
+{
+	if (_ArmEquipped)
+	{
+		if (!bLeftArmEquipped)
+		{
+			WeaponRef->K2_AttachRootComponentTo(HandSocket, NAME_None, EAttachLocation::SnapToTarget, true);
+			bLeftArmEquipped = true;
+			LeftHandWeapon = WeaponRef;
+		}
+	}
+
+	if (!_ArmEquipped)
+	{
+		if (!bRightArmEquipped)
+		{
+			WeaponRef->K2_AttachRootComponentTo(HandSocket, NAME_None, EAttachLocation::SnapToTarget, true);
+			bRightArmEquipped = true;
+			RightHandWeapon = WeaponRef;
+		}
+	}
+}
 
 void ARuthTestCharacter::RagDollBodyPart(FName bone)
 {
@@ -149,3 +210,7 @@ void ARuthTestCharacter::BlendBackBone(FName bone, float dt)
 	CharacterMesh->SetAllBodiesBelowPhysicsBlendWeight(bone,FMath::FInterpTo(1, 0, dt, 1),false);
 }
 
+void  ARuthTestCharacter::TargetClosestPlayer(float Time)
+{
+	
+}

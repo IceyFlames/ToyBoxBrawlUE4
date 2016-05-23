@@ -5,6 +5,7 @@
 #include "GameFramework/Character.h"
 #include "RuthTestCharacter.generated.h"
 
+
 UENUM(BlueprintType)
 enum class DamageCollisionType : uint8
 {
@@ -64,6 +65,19 @@ public:
 	UFUNCTION(BlueprintCallable, Category = PhysicsBlend)
 	void BlendBackBone(FName bone, float dt);
 
+
+	UFUNCTION(BlueprintCallable, Category = FighterMech)
+	void ThrowWeapon(AActor* WeaponRef, UPARAM(ref)bool &_ArmEquipped);
+
+	UFUNCTION(BlueprintCallable, Category = FighterMech) //True for Left Hand: False for Right Hand Equipped:
+	void EquipWeapon(UPoseableMeshComponent* HandSocket,AActor* WeaponRef,bool _ArmEquipped);
+
+	UFUNCTION(BlueprintCallable, Category = FighterMech) //Retrieves the closest weapon from PickupArray
+	void RetrieveClosestWeapon(AEquipment* &_WeaponRef);
+
+	UFUNCTION(BlueprintCallable, Category = FighterMech) //Retrieves the closest weapon from PickupArray
+	void TargetClosestPlayer(float Time);
+
 	UPROPERTY(BlueprintReadWrite)
 	AActor* LeftHandWeapon;
 
@@ -73,6 +87,17 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	USkeletalMeshComponent* CharacterMesh;
 
+
+
+
+#pragma region Lists
+	UPROPERTY(BlueprintReadWrite, Category = "PickUpArray")
+	TArray<AEquipment*> PickUpArray;
+
+	UPROPERTY(BlueprintReadWrite, Category = "TargetArray")
+	TArray<ARuthTestCharacter*> PlayerReferenceArray;
+
+#pragma endregion
 
 #pragma region HitStrings
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
@@ -101,7 +126,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	FLimb RightLegLimb;
 #pragma endregion
-
 
 #pragma region Weapon_Equipping_Properties
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Equipment")
