@@ -157,22 +157,24 @@ void ARuthTestCharacter::ThrowWeapon(AActor* WeaponRef, UPARAM(ref)bool &_ArmEqu
 {
 	
 	AEquipment* Equipment = Cast<AEquipment>(WeaponRef);
-	
-	if (Equipment->StaticMeshObject->IsValidLowLevel())
+	if (Equipment != nullptr)
 	{
-		Equipment->StaticMeshObject->SetSimulatePhysics(true);
-		Equipment->DetachRootComponentFromParent(true);
-		Equipment->ObjectThrown();
-		_ArmEquipped = false;
+		if (Equipment->StaticMeshObject->IsValidLowLevel())
+		{
+			Equipment->StaticMeshObject->SetSimulatePhysics(true);
+			Equipment->DetachRootComponentFromParent(true);
+			Equipment->ObjectThrown();
+			_ArmEquipped = false;
 
-	}
+		}
 
-	if (Equipment->MeshObject->IsValidLowLevel())
-	{
-		Equipment->MeshObject->SetSimulatePhysics(true);
-		Equipment->DetachRootComponentFromParent(true);
-		Equipment->ObjectThrown();
-		_ArmEquipped = false;
+		if (Equipment->MeshObject->IsValidLowLevel())
+		{
+			Equipment->MeshObject->SetSimulatePhysics(true);
+			Equipment->DetachRootComponentFromParent(true);
+			Equipment->ObjectThrown();
+			_ArmEquipped = false;
+		}
 	}
 }
 
