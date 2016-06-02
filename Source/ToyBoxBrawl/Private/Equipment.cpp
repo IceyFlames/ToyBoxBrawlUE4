@@ -16,7 +16,6 @@ AEquipment::AEquipment()
 void AEquipment::BeginPlay()
 {
 	Super::BeginPlay();
-	//_WeaponStrength = _BaseDamage;
 }
 
 // Called every frame
@@ -24,7 +23,7 @@ void AEquipment::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 	countdown -= DeltaTime;
-	
+
 
 	if (_WeaponThrown && countdown < 0)
 	{
@@ -65,6 +64,15 @@ void AEquipment::Deweaponise()
 		return;
 	}
 
+	if (DamageMesh != nullptr)
+	{
+
+		MeshObject->ComponentTags.Remove(FName("Weapon"));
+		MeshObject->ComponentTags.Add(FName("Pickup"));
+		_WeaponStrength = 0.0f;
+		_WeaponThrown = false;
+		return;
+	}
 
 
 	
@@ -76,6 +84,10 @@ void AEquipment::ObjectThrown()
 		MeshObject->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Block);
 
 	if (StaticMeshObject != nullptr)
+		StaticMeshObject->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Block);
+
+
+	if (DamageMesh != nullptr)
 		StaticMeshObject->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Block);
 
 	_WeaponThrown = true;
@@ -99,5 +111,32 @@ void AEquipment::EquipmentPickedUp()
 		StaticMeshObject->ComponentTags.Remove(FName("Pickup"));
 		StaticMeshObject->ComponentTags.Add(FName("Weapon"));
 	}
+
+	if (DamageMesh != nullptr)
+	{
+		DamageMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
+		DamageMesh->ComponentTags.Remove(FName("Pickup"));
+		DamageMesh->ComponentTags.Add(FName("Weapon"));
+	}
 	return;
+}
+
+void AEquipment::ProceduallyDestroyWeapon(float a_Damage)
+{
+	if (DamageMesh != nullptr)
+	{
+		DamageMesh->ApplyDamage(a_Damage, GetActorLocation(), FVector(0, 1, 0), 1);
+	
+	}
+		
+}
+
+
+void AEquipment::DestroyWeapon()
+{
+	if (_NumOfUses < 0)
+	{
+		
+		Destroy();
+	}
 }

@@ -23,6 +23,12 @@ void ARuthTestCharacter::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 
+	if (LeftHandWeapon == nullptr)
+		bLeftArmEquipped = false;
+
+
+	if (RightHandWeapon == nullptr)
+		bRightArmEquipped = false;
 }
 
 // Called to bind functionality to input
@@ -35,7 +41,7 @@ void ARuthTestCharacter::SetupPlayerInputComponent(class UInputComponent* InputC
 
 DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, UPARAM(ref)FLimb& _Limb, bool DistributedDamage, float &aforce_out)
 {
-	
+
 	float LimbsCurrentHp = _Limb._LimbHP;
 
 	if (OtherActor != LeftHandWeapon && OtherActor != RightHandWeapon &&
@@ -48,7 +54,7 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 		if (LeftLegLimb._LimbActive) { damageAmount += 1; }
 		if (RightLegLimb._LimbActive) { damageAmount += 1; }
 
-		
+
 
 
 		ARuthTestCharacter* Player = Cast<ARuthTestCharacter>(OtherActor);
@@ -69,7 +75,7 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 			}
 
 
-			#pragma region Case: LeftArm
+#pragma region Case: LeftArm
 			else if (Tag.IsEqual("LeftArm"))
 			{
 				aforce_out = Player->_ArmKB;
@@ -77,19 +83,19 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 				_Limb._LimbHP -= Player->LeftHandLimb._WeaponDamage;
 				break;
 			}
-			#pragma endregion
+#pragma endregion
 
-			#pragma region RightLeg
+#pragma region RightLeg
 			else if (Tag.IsEqual("RightLeg"))
 			{
 				aforce_out = Player->_LegKB;
-				if (DistributedDamage) { _Limb._LimbHP -= Player->RightLegLimb._WeaponDamage /damageAmount; break; }
-				_Limb._LimbHP -= Player->RightLegLimb._WeaponDamage;	
+				if (DistributedDamage) { _Limb._LimbHP -= Player->RightLegLimb._WeaponDamage / damageAmount; break; }
+				_Limb._LimbHP -= Player->RightLegLimb._WeaponDamage;
 				break;
 			}
-			#pragma endregion
+#pragma endregion
 
-			#pragma region Case: LeftLeg
+#pragma region Case: LeftLeg
 			else if (Tag.IsEqual("LeftLeg"))
 			{
 				aforce_out = Player->_LegKB;
@@ -97,40 +103,63 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 				_Limb._LimbHP -= Player->LeftLegLimb._WeaponDamage;
 				break;
 			}
-			#pragma endregion
+#pragma endregion
 
-			#pragma region Case: Weapon
+#pragma region Case: Weapon
 			else if (Tag.IsEqual("Weapon"))
 			{
 				aforce_out = Equippable->_KnockbackForce;
-				if (DistributedDamage) { _Limb._LimbHP -= Equippable->_WeaponStrength / damageAmount; break; }
+				if (DistributedDamage)
+				{
+					_Limb._LimbHP -= Equippable->_WeaponStrength / damageAmount;
+
+					if (!Equippable->_UnlimitedUses && Equippable->_WeaponStrength > 0)
+					{
+						Equippable->_NumOfUses -= .25f;
+						if (Equippable->_NumOfUses < 0)
+						{
+							Equippable->ProceduallyDestroyWeapon(1000.0f);
+						}
+						break;
+					}
+				}
+
+
 				_Limb._LimbHP -= Equippable->_WeaponStrength;
-				break;
-				
+				if (!Equippable->_UnlimitedUses && Equippable->_WeaponStrength > 0)
+				{
+					Equippable->_NumOfUses -= 1.0f;
+					if (Equippable->_NumOfUses < 0)
+					{
+						Equippable->ProceduallyDestroyWeapon(1000.0f);
+					}
+					break;
+
+				}
 			}
-			#pragma endregion
+#pragma endregion
+
 		}
 
+			if (_Limb._LimbHP < 0)
+			{
+				_Limb._LimbActive = false;
+				return DamageCollisionType::DISMEMBERED;
+			}
 
-		if (_Limb._LimbHP < 0)
-		{
-			_Limb._LimbActive = false;
-			return DamageCollisionType::DISMEMBERED;
-		}
 
+			if (LimbsCurrentHp == _Limb._LimbHP)
+			{
+				return DamageCollisionType::NODAMAGE;
+			}
 
-		if (LimbsCurrentHp == _Limb._LimbHP)
-		{
-			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("No Damage")));
-			return DamageCollisionType::NODAMAGE;
-		}
+			else
+			{
+				return DamageCollisionType::DAMAGED;
+			}
 
-		else
-		{
-			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Current HP: %i"), _Limb._LimbHP, _Limb._BoneName));
-			return DamageCollisionType::DAMAGED;
-		}
 		
+	
 	}
 	return DamageCollisionType::NODAMAGE;
 }

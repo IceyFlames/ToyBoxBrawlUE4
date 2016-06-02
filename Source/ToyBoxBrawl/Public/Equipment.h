@@ -40,6 +40,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = IteamEquipped)
 	void Deweaponise();
 
+	UFUNCTION(BlueprintCallable, Category = IteamEquipped)
+	void ProceduallyDestroyWeapon(float a_Damage);
+
+	UFUNCTION(BlueprintCallable, Category = IteamEquipped)
+	void DestroyWeapon();
 
 	UPROPERTY(BlueprintReadWrite)
 	USkeletalMeshComponent* MeshObject;
@@ -47,6 +52,8 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	UStaticMeshComponent* StaticMeshObject;
 
+	UPROPERTY(BlueprintReadWrite)
+	UDestructibleComponent* DamageMesh;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PickUp Rotation")
 	FVector Ruth_PickupRotation;
@@ -71,11 +78,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Properties")
 	float _KnockbackForce;
 
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Properties", meta = (ToolTip = "If Type is Armour treat_NumofUses as hp" ))
-	//int32 _NumOfUses;
-	//
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Properties")
-	//bool _UnlimitedUses;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Properties", meta = (ToolTip = "If Type is Armour treat_NumofUses as hp" ))
+	float _NumOfUses;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Properties")
+	bool _UnlimitedUses;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Properties", meta = (ToolTip = "Has Weapon been picked up"))
 	bool _WeaponActive;
