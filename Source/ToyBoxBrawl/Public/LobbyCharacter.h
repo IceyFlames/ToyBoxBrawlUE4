@@ -22,8 +22,9 @@ public:
 
 	void Select();
 	void Deselect();
-	void UpButton();
-	void DownButton();
+	void DPAD_UpButton();
+	void DPAD_DownButton();
+	void BottomButton();
 	void RightButton();
 	void LeftButton();
 	void MoveForward(float axisValue);
@@ -31,11 +32,24 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 
+	//Constructing a functionevent to update the widget
+	UFUNCTION(BlueprintImplementableEvent, meta = (Name = "UpdateWidgetReferences"))
+	void UpdateWidgets(int _CreationID);
+
+	void CreatingCharacterProcess(int num);
+
+	void UpdateCharacterPreview();
+
+
 	//Boolean references for Transitions
 	bool ConnectedToGame; //Is player connected to game
 	bool CharacterChosoen; // Has player choosen a character
-	bool ClothingOptionChosen; //Has a Option been Selected
+	int ClothingOptionChosen; //Has a Option been Selected
 	bool ReadyUp; //Is player ready to commence the game
+
+	UPROPERTY(BlueprintReadWrite, Category = "CreationProcess")
+	int CharacterCreationID;
+
 
 	//Controller Input as well as Character ID References
 	int CharacterID; //What is the characters ID
@@ -48,22 +62,54 @@ public:
 	int PantsID; //ID of the pants from the array
 	int ShoesID; //ID of the shoes from the array
 
+	UPROPERTY(BlueprintReadWrite, Category = "Mesh")
+	USkeletalMeshComponent* CurrentMesh;
 
+	UPROPERTY(BlueprintReadWrite, Category = "Mesh")
+	UAnimationAsset* CurrentAnimation;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Mesh")
+	UStaticMesh* CurrentHat;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Mesh")
+	UStaticMeshComponent* CurrentHair;
+
+	//Shes a very special unique character aint she *sarcasm/annoyed*
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
+	UStaticMesh* RuthHairMesh;
+
+
+	
 	//Skeletal Meshes
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "RuthMesh")
-	USkeletalMeshComponent* RuthSkeletalMesh;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "RuthMesh")
+#pragma region SkeletalMeshes
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
+	USkeletalMesh* RuthSkeletalMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
+	USkeletalMesh* AEIOUSkeletalMesh;
+	
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
+	//USkeletalMesh* MarcelSkeletalMesh;
+	//
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
+	//USkeletalMesh* BazzaSkeletalMesh;
+#pragma endregion
+
+
+	//Animations for Meshes
+#pragma region IdleStates
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Anim")
 	UAnimationAsset* RuthIdle;
 
-
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AEIOUMesh")
-	USkeletalMeshComponent* AEIOUSkeletalMesh;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AEIOUMesh")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Anim")
 	UAnimationAsset* AEIOUIdle;
 
-	USkeletalMeshComponent* BazzaSkeletalMesh;
-	USkeletalMeshComponent* MarcelSkeletalMesh;
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Anim")
+	//UAnimationAsset* MarcelIdle;
+	//
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Anim")
+	//UAnimationAsset* BazzaIdle;
+#pragma endregion
 
 
 
