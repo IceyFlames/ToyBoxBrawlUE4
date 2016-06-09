@@ -17,7 +17,7 @@ void ALobbyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	CharacterCreationID = 0;
-	ClothingOptionChosen = -1;
+	ClothingOptionHighlighted = -1;
 	
 }
 
@@ -42,8 +42,8 @@ void ALobbyCharacter::CreatingCharacterProcess(int num)
 
 	case 1: 
 	{
-		ClothingOptionChosen++;
-		UpdateWidgets(ClothingOptionChosen);
+		ClothingOptionHighlighted++;
+		UpdateWidgets(ClothingOptionHighlighted);
 		
 
 	}
@@ -51,7 +51,8 @@ void ALobbyCharacter::CreatingCharacterProcess(int num)
 
 	case 2:
 	{
-
+		ClothingOptionSelected = true;
+		UpdateWidgets(ClothingOptionHighlighted);
 	}
 	break;
 
@@ -60,15 +61,53 @@ void ALobbyCharacter::CreatingCharacterProcess(int num)
 	}
 }
 
-void ALobbyCharacter::Select()
+void ALobbyCharacter::TransitionBack(int num)
 {
+	switch (num)
+	{
+	case 0:
+	{
+		//CurrentMesh->SetSkeletalMesh(nullptr, true);
+		//CurrentHair->SetStaticMesh(nullptr);
+		//CurrentMesh->PlayAnimation(nullptr , true);
+	}
+	break;
 
+	case 1:
+	{
+		CurrentMesh->SetSkeletalMesh(nullptr, true);
+		CurrentHair->SetStaticMesh(nullptr);
+		CurrentMesh->PlayAnimation(nullptr, true);
+		CharacterCreationID = 0;
+
+		//ClothingOptionHighlighted--;
+		UpdateWidgets(ClothingOptionHighlighted);
+
+
+	}
+	break;
+
+	case 2:
+	{
+		
+		ClothingOptionHighlighted = -1;
+		UpdateWidgets(ClothingOptionHighlighted);
+		//ClothingOptionHighlighted = 0;
+	}
+	break;
+
+	case 3:
+	{
+		ClothingOptionSelected = false;
+		UpdateWidgets(ClothingOptionHighlighted);
+	}
+
+	default:
+		break;
+	}
 }
 
-void ALobbyCharacter::Deselect()
-{
 
-}
 
 void ALobbyCharacter::DPAD_UpButton()
 {
@@ -85,9 +124,9 @@ void ALobbyCharacter::DPAD_UpButton()
 
 		case 2:
 		{
-			ClothingOptionChosen--;
-			if (ClothingOptionChosen < 0) { ClothingOptionChosen = 4; }
-				UpdateWidgets(ClothingOptionChosen);
+			ClothingOptionHighlighted--;
+			if (ClothingOptionHighlighted < 0) { ClothingOptionHighlighted = 4; }
+				UpdateWidgets(ClothingOptionHighlighted);
 		}
 		break;
 		case 3: break;
@@ -109,9 +148,9 @@ void ALobbyCharacter::DPAD_DownButton()
 
 	case 2:
 	{
-		ClothingOptionChosen++;
-		if (ClothingOptionChosen > 4) { ClothingOptionChosen = 0; }
-		UpdateWidgets(ClothingOptionChosen);
+		ClothingOptionHighlighted++;
+		if (ClothingOptionHighlighted > 4) { ClothingOptionHighlighted = 0; }
+		UpdateWidgets(ClothingOptionHighlighted);
 	}
 	break;
 	case 3: break;
@@ -143,14 +182,22 @@ void ALobbyCharacter::UpdateCharacterPreview()
 void ALobbyCharacter::BottomButton()
 {
 	CreatingCharacterProcess(CharacterCreationID);
-	CharacterCreationID++;
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Character Creation: x: %i"), CharacterCreationID));
+	CharacterCreationID++; 
+	if (CharacterCreationID > 3) CharacterCreationID = 3;
 
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, FString::Printf(TEXT("Character Creation: x: %i"), CharacterCreationID));
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, FString::Printf(TEXT("Clothing Option: x: %i"), ClothingOptionHighlighted));
 }
 
 void ALobbyCharacter::RightButton()
 {
+	TransitionBack(CharacterCreationID);
+	CharacterCreationID--;
 
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Character Creation: x: %i"), CharacterCreationID));
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Clothing Option: x: %i"), ClothingOptionHighlighted));
+
+	if (CharacterCreationID < 0) { CharacterCreationID = 0; }
 }
 
 void ALobbyCharacter::LeftButton()

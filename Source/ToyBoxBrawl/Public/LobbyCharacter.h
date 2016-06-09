@@ -5,6 +5,29 @@
 #include "GameFramework/Pawn.h"
 #include "LobbyCharacter.generated.h"
 
+
+USTRUCT(BlueprintType)
+struct FClothes
+{
+	GENERATED_USTRUCT_BODY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ClothProperty")
+	bool _ColorWheel;
+
+	UPROPERTY(EditAnywhere, Category = "ClothProperty")
+	int _MaterialSlot;
+
+	UPROPERTY(EditAnywhere, Category = "ClothProperty")
+	UStaticMesh* StaticMesh;
+
+	UPROPERTY(EditAnywhere, Category = "ClothProperty")
+	FName _Socketname;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ClothProperty")
+	bool _EntireBody;
+
+};
+
+
 UCLASS()
 class TOYBOXBRAWL_API ALobbyCharacter : public APawn
 {
@@ -20,8 +43,6 @@ public:
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
 
-	void Select();
-	void Deselect();
 	void DPAD_UpButton();
 	void DPAD_DownButton();
 	void BottomButton();
@@ -37,20 +58,37 @@ public:
 	void UpdateWidgets(int _CreationID);
 
 	void CreatingCharacterProcess(int num);
-
+	void TransitionBack(int num);
 	void UpdateCharacterPreview();
+	
 
+#pragma region Lists
+	UPROPERTY(EditAnywhere, Category = "RuthClothes")
+	TArray<FClothes> RHats;
 
-	//Boolean references for Transitions
-	bool ConnectedToGame; //Is player connected to game
-	bool CharacterChosoen; // Has player choosen a character
-	int ClothingOptionChosen; //Has a Option been Selected
-	bool ReadyUp; //Is player ready to commence the game
+	UPROPERTY(EditAnywhere, Category = "RuthClothes")
+	TArray<FClothes> RTorso;
 
+	UPROPERTY(EditAnywhere, Category = "RuthClothes")
+	TArray<FClothes> RPants;
+	
+	UPROPERTY(EditAnywhere, Category = "RuthClothes")
+	TArray<FClothes> RShoes;
+
+#pragma endregion
+
+#pragma region Options Selected
+	UPROPERTY(BlueprintReadWrite, Category = "Mesh")
+	int ClothingOptionHighlighted; //ID of the widget object being highlighted
+
+	UPROPERTY(BlueprintReadWrite, Category = "Mesh")
+	bool ClothingOptionSelected; //A clothing option has been selected
+	
 	UPROPERTY(BlueprintReadWrite, Category = "CreationProcess")
 	int CharacterCreationID;
+#pragma endregion
 
-
+#pragma region IDReferences
 	//Controller Input as well as Character ID References
 	int CharacterID; //What is the characters ID
 	int ControllerID; //What is the controller ID
@@ -61,7 +99,9 @@ public:
 	int TorsoID; //ID of torso from the array
 	int PantsID; //ID of the pants from the array
 	int ShoesID; //ID of the shoes from the array
+#pragma endregion
 
+#pragma region Meshes
 	UPROPERTY(BlueprintReadWrite, Category = "Mesh")
 	USkeletalMeshComponent* CurrentMesh;
 
@@ -77,7 +117,7 @@ public:
 	//Shes a very special unique character aint she *sarcasm/annoyed*
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
 	UStaticMesh* RuthHairMesh;
-
+#pragma endregion
 
 	
 	//Skeletal Meshes
