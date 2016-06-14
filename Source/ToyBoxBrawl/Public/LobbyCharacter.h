@@ -45,6 +45,9 @@ public:
 
 	void DPAD_UpButton();
 	void DPAD_DownButton();
+	void DPAD_LeftButton();
+	void DPAD_RightButton();
+
 	void BottomButton();
 	void RightButton();
 	void LeftButton();
@@ -61,6 +64,8 @@ public:
 	void TransitionBack(int num);
 	void UpdateCharacterPreview();
 	
+	void AssignClothing();
+	void UpdateClothingCounters(int _num);
 
 #pragma region Lists
 	UPROPERTY(EditAnywhere, Category = "RuthClothes")
@@ -78,10 +83,22 @@ public:
 #pragma endregion
 
 #pragma region Options Selected
-	UPROPERTY(BlueprintReadWrite, Category = "Mesh")
+	UPROPERTY(BlueprintReadWrite, Category = "ClothingSelection")
 	int ClothingOptionHighlighted; //ID of the widget object being highlighted
 
-	UPROPERTY(BlueprintReadWrite, Category = "Mesh")
+	UPROPERTY(BlueprintReadWrite, Category = "ClothingSelection")
+	int HatIDHighlighted; //ID of the widget object being highlighted
+
+	UPROPERTY(BlueprintReadWrite, Category = "ClothingSelection")
+	int TorsoIDHightlighted; //ID of the widget object being highlighted
+
+	UPROPERTY(BlueprintReadWrite, Category = "ClothingSelection")
+	int PantsIDHightlighted; //ID of the widget object being highlighted
+
+	UPROPERTY(BlueprintReadWrite, Category = "ClothingSelection")
+	int ShoesIDHighlighted; //ID of the widget object being highlighted
+
+	UPROPERTY(BlueprintReadWrite, Category = "ClothingSelection")
 	bool ClothingOptionSelected; //A clothing option has been selected
 	
 	UPROPERTY(BlueprintReadWrite, Category = "CreationProcess")
@@ -90,6 +107,7 @@ public:
 
 #pragma region IDReferences
 	//Controller Input as well as Character ID References
+	UPROPERTY(BlueprintReadWrite, Category = "CharacterID")
 	int CharacterID; //What is the characters ID
 	int ControllerID; //What is the controller ID
 	
@@ -109,10 +127,17 @@ public:
 	UAnimationAsset* CurrentAnimation;
 
 	UPROPERTY(BlueprintReadWrite, Category = "Mesh")
-	UStaticMesh* CurrentHat;
+	UStaticMeshComponent* CurrentHat;
+
+
+	UPROPERTY(BlueprintReadWrite, Category = "Mesh")
+	UStaticMeshComponent* CurrentTorso;
 
 	UPROPERTY(BlueprintReadWrite, Category = "Mesh")
 	UStaticMeshComponent* CurrentHair;
+
+
+
 
 	//Shes a very special unique character aint she *sarcasm/annoyed*
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")

@@ -109,6 +109,100 @@ void ALobbyCharacter::TransitionBack(int num)
 
 
 
+void ALobbyCharacter::UpdateClothingCounters(int _num)
+{
+	switch (CharacterID)
+	{
+		//What is the characters ID
+		case 0: 
+		{
+			//Which clothing Option is selected
+			switch (ClothingOptionHighlighted)
+			{
+
+			case 0:
+			{
+				HatIDHighlighted += _num;
+				if (HatIDHighlighted > RHats.Num() - 1)
+					HatIDHighlighted = 0;
+
+				if (HatIDHighlighted < 0)
+					HatIDHighlighted = RHats.Num() - 1;
+
+				CurrentHat->SetStaticMesh(RHats[HatIDHighlighted].StaticMesh);
+				CurrentHat->AttachSocketName = RHats[HatIDHighlighted]._Socketname;
+				UpdateWidgets(ClothingOptionHighlighted);
+				
+			}
+			break;
+
+			case 1:
+			{
+				if (RTorso.Num() > 0)
+				{
+					TorsoIDHightlighted += _num;
+					if (TorsoIDHightlighted > RTorso.Num() - 1)
+						TorsoIDHightlighted = 0;
+
+					if (TorsoIDHightlighted < 0)
+						TorsoIDHightlighted = RTorso.Num() - 1;
+
+
+					CurrentTorso->SetStaticMesh(RTorso[TorsoIDHightlighted].StaticMesh);
+					CurrentTorso->AttachSocketName = RTorso[TorsoIDHightlighted]._Socketname;
+					UpdateWidgets(ClothingOptionHighlighted);
+				}
+			}
+			break;
+			
+			case 2:
+			{
+				if (RPants.Num() > 0)
+				{
+					PantsIDHightlighted += _num;
+					if (PantsIDHightlighted > RPants.Num() - 1)
+						PantsIDHightlighted = 0;
+
+					if (PantsIDHightlighted < 0)
+						PantsIDHightlighted = RPants.Num() - 1;
+
+					UpdateWidgets(ClothingOptionHighlighted);
+				}
+			}
+			break;
+			case 3:
+			{
+				if (RShoes.Num() > 0)
+				{
+					ShoesIDHighlighted += _num;
+					if (ShoesIDHighlighted > RShoes.Num() - 1)
+						ShoesIDHighlighted = 0;
+
+					if (ShoesIDHighlighted < 0)
+						ShoesIDHighlighted = RShoes.Num() - 1;
+
+					UpdateWidgets(ClothingOptionHighlighted);
+				}
+			}
+			break;
+			
+		
+
+			default:
+				break;
+			}
+		}
+		break;
+
+		case 1:
+		{
+			
+		}
+		break;
+	}
+
+}
+
 void ALobbyCharacter::DPAD_UpButton()
 {
 	switch (CharacterCreationID)
@@ -156,6 +250,24 @@ void ALobbyCharacter::DPAD_DownButton()
 	case 3: break;
 	}
 }
+
+
+void ALobbyCharacter::DPAD_LeftButton()
+{
+	if (ClothingOptionSelected)
+	{
+		UpdateClothingCounters(-1);
+	}
+}
+
+void ALobbyCharacter::DPAD_RightButton()
+{
+	if (ClothingOptionSelected)
+	{
+		UpdateClothingCounters(1);
+	}
+}
+
 
 void ALobbyCharacter::UpdateCharacterPreview()
 {
@@ -220,6 +332,8 @@ void ALobbyCharacter::SetupPlayerInputComponent(class UInputComponent* InputComp
 	InputComponent->BindAction("Right_Button", IE_Pressed, this, &ALobbyCharacter::RightButton);
 	InputComponent->BindAction("Dpad_up", IE_Pressed, this,  &ALobbyCharacter::DPAD_UpButton);
 	InputComponent->BindAction("Dpad_down", IE_Pressed, this, &ALobbyCharacter::DPAD_DownButton);
+	InputComponent->BindAction("Dpad_left", IE_Pressed, this, &ALobbyCharacter::DPAD_LeftButton);
+	InputComponent->BindAction("Dpad_right", IE_Pressed, this, &ALobbyCharacter::DPAD_RightButton);
 	 
 }
 
