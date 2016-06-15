@@ -34,8 +34,28 @@ void ALobbyCharacter::CreatingCharacterProcess(int num)
 	{
 	case 0: 
 	{
+		
+
 		CurrentMesh->SetSkeletalMesh(RuthSkeletalMesh, true);
 		CurrentHair->SetStaticMesh(RuthHairMesh);
+
+		CurrentTorso->SetStaticMesh(RTorso[0].StaticMesh);
+		CurrentTorso->AttachSocketName = RTorso[0]._Socketname;
+		
+
+		//Left Shoe Socket
+		FName LShoeSocket = "l_Shoe";
+		FName RShoeSocket = "r_Shoe";
+		CurrentLeftShoe->SetStaticMesh(RShoes[0].StaticMesh);
+		CurrentRightShoe->AttachSocketName = LShoeSocket;
+
+		//Right Shoe Socket
+		CurrentLeftShoe->AttachSocketName = RShoeSocket;
+		CurrentRightShoe->SetStaticMesh(RShoes[0].StaticMesh);
+
+	
+
+
 		CurrentMesh->PlayAnimation(RuthIdle, true);
 	}
 	break;
@@ -56,6 +76,14 @@ void ALobbyCharacter::CreatingCharacterProcess(int num)
 	}
 	break;
 
+	case 3:
+	{
+		ClothingOptionSelected = false;
+		UpdateWidgets(ClothingOptionHighlighted);
+		CharacterCreationID = 1;
+	}
+	break;
+
 	default:
 		break;
 	}
@@ -65,45 +93,57 @@ void ALobbyCharacter::TransitionBack(int num)
 {
 	switch (num)
 	{
-	case 0:
-	{
-		//CurrentMesh->SetSkeletalMesh(nullptr, true);
-		//CurrentHair->SetStaticMesh(nullptr);
-		//CurrentMesh->PlayAnimation(nullptr , true);
-	}
-	break;
-
-	case 1:
-	{
-		CurrentMesh->SetSkeletalMesh(nullptr, true);
-		CurrentHair->SetStaticMesh(nullptr);
-		CurrentMesh->PlayAnimation(nullptr, true);
-		CharacterCreationID = 0;
-
-		//ClothingOptionHighlighted--;
-		UpdateWidgets(ClothingOptionHighlighted);
-
-
-	}
-	break;
-
-	case 2:
-	{
-		
-		ClothingOptionHighlighted = -1;
-		UpdateWidgets(ClothingOptionHighlighted);
-		//ClothingOptionHighlighted = 0;
-	}
-	break;
-
-	case 3:
-	{
-		ClothingOptionSelected = false;
-		UpdateWidgets(ClothingOptionHighlighted);
-	}
-
-	default:
+		case 0:
+		{
+			//CurrentMesh->SetSkeletalMesh(nullptr, true);
+			//CurrentHair->SetStaticMesh(nullptr);
+			//CurrentMesh->PlayAnimation(nullptr , true);
+		}
 		break;
+
+		case 1:
+		{
+			CurrentMesh->SetSkeletalMesh(nullptr, true);
+			CurrentHair->SetStaticMesh(nullptr);
+			CurrentMesh->PlayAnimation(nullptr, true);
+			CharacterCreationID = 0;
+
+			CurrentTorso->SetStaticMesh(nullptr);
+			CurrentHat->SetStaticMesh(nullptr);
+			CurrentLeftShoe->SetStaticMesh(nullptr);
+			CurrentRightShoe->SetStaticMesh(nullptr);
+
+
+		
+			CurrentLeftShoe->SetStaticMesh(nullptr);
+			CurrentRightShoe->SetStaticMesh(nullptr);
+
+
+			//ClothingOptionHighlighted--;
+			UpdateWidgets(ClothingOptionHighlighted);
+
+
+		}
+		break;
+
+		case 2:
+		{
+
+			ClothingOptionHighlighted = -1;
+			UpdateWidgets(ClothingOptionHighlighted);
+			//ClothingOptionHighlighted = 0;
+		}
+		break;
+
+		case 3:
+		{
+			ClothingOptionSelected = false;
+			UpdateWidgets(ClothingOptionHighlighted);
+			
+			
+		}
+	
+		
 	}
 }
 
@@ -114,93 +154,81 @@ void ALobbyCharacter::UpdateClothingCounters(int _num)
 	switch (CharacterID)
 	{
 		//What is the characters ID
-		case 0: 
+		case 0:
 		{
 			//Which clothing Option is selected
 			switch (ClothingOptionHighlighted)
 			{
 
-			case 0:
-			{
-				HatIDHighlighted += _num;
-				if (HatIDHighlighted > RHats.Num() - 1)
-					HatIDHighlighted = 0;
-
-				if (HatIDHighlighted < 0)
-					HatIDHighlighted = RHats.Num() - 1;
-
-				CurrentHat->SetStaticMesh(RHats[HatIDHighlighted].StaticMesh);
-				CurrentHat->AttachSocketName = RHats[HatIDHighlighted]._Socketname;
-				UpdateWidgets(ClothingOptionHighlighted);
-				
-			}
-			break;
-
-			case 1:
-			{
-				if (RTorso.Num() > 0)
+				case 0:
 				{
-					TorsoIDHightlighted += _num;
-					if (TorsoIDHightlighted > RTorso.Num() - 1)
-						TorsoIDHightlighted = 0;
+					HatIDHighlighted += _num;
+					if (HatIDHighlighted > RHats.Num() - 1)
+						HatIDHighlighted = 0;
 
-					if (TorsoIDHightlighted < 0)
-						TorsoIDHightlighted = RTorso.Num() - 1;
+					if (HatIDHighlighted < 0)
+						HatIDHighlighted = RHats.Num() - 1;
 
-
-					CurrentTorso->SetStaticMesh(RTorso[TorsoIDHightlighted].StaticMesh);
-					CurrentTorso->AttachSocketName = RTorso[TorsoIDHightlighted]._Socketname;
+					CurrentHat->SetStaticMesh(RHats[HatIDHighlighted].StaticMesh);
+					CurrentHat->AttachSocketName = RHats[HatIDHighlighted]._Socketname;
 					UpdateWidgets(ClothingOptionHighlighted);
+
 				}
-			}
-			break;
-			
-			case 2:
-			{
-				if (RPants.Num() > 0)
+				break;
+
+				case 1:
 				{
-					PantsIDHightlighted += _num;
-					if (PantsIDHightlighted > RPants.Num() - 1)
-						PantsIDHightlighted = 0;
+					if (RTorso.Num() > 0)
+					{
+						TorsoIDHightlighted += _num;
+						if (TorsoIDHightlighted > RTorso.Num() - 1)
+							TorsoIDHightlighted = 0;
 
-					if (PantsIDHightlighted < 0)
-						PantsIDHightlighted = RPants.Num() - 1;
+						if (TorsoIDHightlighted < 0)
+							TorsoIDHightlighted = RTorso.Num() - 1;
 
-					UpdateWidgets(ClothingOptionHighlighted);
+
+						CurrentTorso->SetStaticMesh(RTorso[TorsoIDHightlighted].StaticMesh);
+						CurrentTorso->AttachSocketName = RTorso[TorsoIDHightlighted]._Socketname;
+						UpdateWidgets(ClothingOptionHighlighted);
+					}
 				}
-			}
-			break;
-			case 3:
-			{
-				if (RShoes.Num() > 0)
+				break;
+
+				case 2:
 				{
-					ShoesIDHighlighted += _num;
-					if (ShoesIDHighlighted > RShoes.Num() - 1)
-						ShoesIDHighlighted = 0;
+					if (RPants.Num() > 0)
+					{
+						PantsIDHightlighted += _num;
+						if (PantsIDHightlighted > RPants.Num() - 1)
+							PantsIDHightlighted = 0;
 
-					if (ShoesIDHighlighted < 0)
-						ShoesIDHighlighted = RShoes.Num() - 1;
+						if (PantsIDHightlighted < 0)
+							PantsIDHightlighted = RPants.Num() - 1;
 
-					UpdateWidgets(ClothingOptionHighlighted);
+						UpdateWidgets(ClothingOptionHighlighted);
+					}
 				}
-			}
-			break;
-			
-		
+				break;
 
-			default:
+				case 3:
+				{
+					if (RShoes.Num() > 0)
+					{
+						ShoesIDHighlighted += _num;
+						if (ShoesIDHighlighted > RShoes.Num() - 1)
+							ShoesIDHighlighted = 0;
+
+						if (ShoesIDHighlighted < 0)
+							ShoesIDHighlighted = RShoes.Num() - 1;
+
+						UpdateWidgets(ClothingOptionHighlighted);
+					}
+				}
 				break;
 			}
 		}
-		break;
-
-		case 1:
-		{
-			
-		}
-		break;
 	}
-
 }
 
 void ALobbyCharacter::DPAD_UpButton()
@@ -231,23 +259,25 @@ void ALobbyCharacter::DPAD_DownButton()
 {
 	switch (CharacterCreationID)
 	{
-	case 0: break;
-	case 1: 
-	{
-		CharacterID++;
-		if (CharacterID > 1) { CharacterID = 0; }
-		UpdateCharacterPreview();
-	}
-	break;
+		case 0: break;
 
-	case 2:
-	{
-		ClothingOptionHighlighted++;
-		if (ClothingOptionHighlighted > 4) { ClothingOptionHighlighted = 0; }
-		UpdateWidgets(ClothingOptionHighlighted);
-	}
-	break;
-	case 3: break;
+		case 1: 
+		{
+			CharacterID++;
+			if (CharacterID > 1) { CharacterID = 0; }
+			UpdateCharacterPreview();
+		}
+		break;
+
+		case 2:
+		{
+			ClothingOptionHighlighted++;
+			if (ClothingOptionHighlighted > 4) { ClothingOptionHighlighted = 0; }
+			UpdateWidgets(ClothingOptionHighlighted);
+		}
+		break;
+		
+	
 	}
 }
 
@@ -277,7 +307,23 @@ void ALobbyCharacter::UpdateCharacterPreview()
 		{
 			CurrentMesh->SetSkeletalMesh(RuthSkeletalMesh, true);
 			CurrentHair->SetStaticMesh(RuthHairMesh);
+			CurrentTorso->SetStaticMesh(RTorso[0].StaticMesh);
+			CurrentTorso->AttachSocketName = RTorso[0]._Socketname;
 			CurrentMesh->PlayAnimation(RuthIdle, true);
+
+
+			//Left Shoe Socket
+			FName LShoeSocket = "l_Shoe";
+			FName RShoeSocket = "r_Shoe";
+			CurrentLeftShoe->SetStaticMesh(RShoes[0].StaticMesh);
+			CurrentRightShoe->AttachSocketName = LShoeSocket;
+
+			//Right Shoe Socket
+			CurrentLeftShoe->AttachSocketName = RShoeSocket;
+			CurrentRightShoe->SetStaticMesh(RShoes[0].StaticMesh);
+
+	
+
 		}
 		break;
 
@@ -286,6 +332,10 @@ void ALobbyCharacter::UpdateCharacterPreview()
 			CurrentMesh->SetSkeletalMesh(AEIOUSkeletalMesh, true);
 			CurrentHair->SetStaticMesh(nullptr);
 			CurrentMesh->PlayAnimation(AEIOUIdle, true);
+			CurrentRightShoe->SetStaticMesh(nullptr);
+			CurrentLeftShoe->SetStaticMesh(nullptr);
+			CurrentTorso->SetStaticMesh(nullptr);
+			CurrentHat->SetStaticMesh(nullptr);
 		}
 	}
 }
@@ -295,7 +345,10 @@ void ALobbyCharacter::BottomButton()
 {
 	CreatingCharacterProcess(CharacterCreationID);
 	CharacterCreationID++; 
+
 	if (CharacterCreationID > 3) CharacterCreationID = 3;
+
+
 
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, FString::Printf(TEXT("Character Creation: x: %i"), CharacterCreationID));
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, FString::Printf(TEXT("Clothing Option: x: %i"), ClothingOptionHighlighted));

@@ -80,6 +80,8 @@ public:
 	UPROPERTY(EditAnywhere, Category = "RuthClothes")
 	TArray<FClothes> RShoes;
 
+	FName ShoeSockets;
+
 #pragma endregion
 
 #pragma region Options Selected
@@ -136,7 +138,10 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "Mesh")
 	UStaticMeshComponent* CurrentHair;
 
-
+	UPROPERTY(BlueprintReadWrite, Category = "Mesh")
+	UStaticMeshComponent* CurrentLeftShoe;
+	UPROPERTY(BlueprintReadWrite, Category = "Mesh")
+	UStaticMeshComponent* CurrentRightShoe;
 
 
 	//Shes a very special unique character aint she *sarcasm/annoyed*
