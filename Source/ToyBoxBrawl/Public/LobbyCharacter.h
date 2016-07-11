@@ -2,8 +2,11 @@
 
 #pragma once
 
+#include "Kismet/KismetMathLibrary.h"
 #include "GameFramework/Pawn.h"
 #include "LobbyCharacter.generated.h"
+
+
 
 
 USTRUCT(BlueprintType)
@@ -24,8 +27,11 @@ struct FClothes
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ClothProperty")
 	bool _EntireBody;
-
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ClothProperty")
+	UMaterialInterface* Material;
 };
+
 
 
 UCLASS()
@@ -52,6 +58,7 @@ public:
 	void RightButton();
 	void LeftButton();
 	void MoveForward(float axisValue);
+	void MoveRight(float axisValue);
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
@@ -60,6 +67,12 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, meta = (Name = "UpdateWidgetReferences"))
 	void UpdateWidgets(int _CreationID);
 
+	//Constructing a functionevent to update the widget
+	UFUNCTION(BlueprintImplementableEvent, meta = (Name = "ColorWheelReference"))
+	void UpdateColorWheel(bool visble, float rotation);
+
+
+	
 	void CreatingCharacterProcess(int num);
 	void TransitionBack(int num);
 	void UpdateCharacterPreview();
@@ -107,6 +120,7 @@ public:
 	int CharacterCreationID;
 #pragma endregion
 
+
 #pragma region IDReferences
 	//Controller Input as well as Character ID References
 	UPROPERTY(BlueprintReadWrite, Category = "CharacterID")
@@ -119,6 +133,14 @@ public:
 	int TorsoID; //ID of torso from the array
 	int PantsID; //ID of the pants from the array
 	int ShoesID; //ID of the shoes from the array
+
+	//Reference to colour instance 
+	float ColorWheelRotation; //Ranges from 0-360 for colorwheel hue value
+	float _Dt; //Just a reference pointer for deltatime
+	bool ColourWheelEnabled;
+
+
+
 #pragma endregion
 
 #pragma region Meshes
@@ -143,6 +165,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "Mesh")
 	UStaticMeshComponent* CurrentRightShoe;
 
+	UStaticMeshComponent* ModifiedMesh;
+	UMaterialInstanceDynamic* MeshMaterialInstance1;
+	UMaterialInstanceDynamic* MeshMaterialInstance2;
 
 	//Shes a very special unique character aint she *sarcasm/annoyed*
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
@@ -181,7 +206,7 @@ public:
 	//UAnimationAsset* BazzaIdle;
 #pragma endregion
 
-
+	
 
 	//Character Components
 	USkeletalMeshComponent* CharacterMesh; //The characters main mesh body

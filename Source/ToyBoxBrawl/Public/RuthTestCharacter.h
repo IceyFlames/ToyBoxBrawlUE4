@@ -147,6 +147,9 @@ public:
 	bool bLeftKick;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animating")
 	bool bRightKick;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animating")
+	bool bSliding;
+
 #pragma endregion
 
 

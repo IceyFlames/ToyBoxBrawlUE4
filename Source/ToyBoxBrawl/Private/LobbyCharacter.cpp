@@ -25,6 +25,7 @@ void ALobbyCharacter::BeginPlay()
 void ALobbyCharacter::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
+	_Dt = DeltaTime;
 
 }
 
@@ -35,7 +36,6 @@ void ALobbyCharacter::CreatingCharacterProcess(int num)
 	case 0: 
 	{
 		
-
 		CurrentMesh->SetSkeletalMesh(RuthSkeletalMesh, true);
 		CurrentHair->SetStaticMesh(RuthHairMesh);
 
@@ -78,9 +78,18 @@ void ALobbyCharacter::CreatingCharacterProcess(int num)
 
 	case 3:
 	{
-		ClothingOptionSelected = false;
-		UpdateWidgets(ClothingOptionHighlighted);
-		CharacterCreationID = 1;
+
+		if (ColourWheelEnabled)
+		{
+			ColourWheelEnabled = false;
+		}
+
+		if (!ColourWheelEnabled)
+		{
+			ClothingOptionSelected = false;
+			UpdateWidgets(ClothingOptionHighlighted);
+			CharacterCreationID = 1;
+		}
 	}
 	break;
 
@@ -171,6 +180,14 @@ void ALobbyCharacter::UpdateClothingCounters(int _num)
 
 					CurrentHat->SetStaticMesh(RHats[HatIDHighlighted].StaticMesh);
 					CurrentHat->AttachSocketName = RHats[HatIDHighlighted]._Socketname;
+					ColourWheelEnabled = RHats[HatIDHighlighted]._ColorWheel;
+					
+					ModifiedMesh = CurrentHat;
+					MeshMaterialInstance1 = ModifiedMesh->CreateDynamicMaterialInstance(0, RHats[HatIDHighlighted].Material);
+					MeshMaterialInstance2 = ModifiedMesh->CreateDynamicMaterialInstance(0, RHats[HatIDHighlighted].Material);
+
+
+					ColorWheelRotation = 0;
 					UpdateWidgets(ClothingOptionHighlighted);
 
 				}
@@ -190,6 +207,14 @@ void ALobbyCharacter::UpdateClothingCounters(int _num)
 
 						CurrentTorso->SetStaticMesh(RTorso[TorsoIDHightlighted].StaticMesh);
 						CurrentTorso->AttachSocketName = RTorso[TorsoIDHightlighted]._Socketname;
+						ColourWheelEnabled = RTorso[TorsoIDHightlighted]._ColorWheel;
+						
+						
+						ModifiedMesh = CurrentTorso;
+						MeshMaterialInstance1 = ModifiedMesh->CreateDynamicMaterialInstance(0, RTorso[TorsoIDHightlighted].Material);
+						MeshMaterialInstance2 = CurrentMesh->CreateDynamicMaterialInstance(1, RTorso[TorsoIDHightlighted].Material);
+
+						ColorWheelRotation = 0;
 						UpdateWidgets(ClothingOptionHighlighted);
 					}
 				}
@@ -206,6 +231,13 @@ void ALobbyCharacter::UpdateClothingCounters(int _num)
 						if (PantsIDHightlighted < 0)
 							PantsIDHightlighted = RPants.Num() - 1;
 
+
+						//CurrentTorso->SetStaticMesh(RPants[PantsIDHightlighted].StaticMesh);
+						//CurrentTorso->AttachSocketName = RPants[PantsIDHightlighted]._Socketname;
+						//ColourWheelEnabled = RPants[PantsIDHightlighted]._ColorWheel;
+
+
+						ColorWheelRotation = 0;
 						UpdateWidgets(ClothingOptionHighlighted);
 					}
 				}
@@ -222,6 +254,26 @@ void ALobbyCharacter::UpdateClothingCounters(int _num)
 						if (ShoesIDHighlighted < 0)
 							ShoesIDHighlighted = RShoes.Num() - 1;
 
+						FName LShoeSocket = "l_Shoe";
+						FName RShoeSocket = "r_Shoe";
+
+
+						CurrentLeftShoe->SetStaticMesh(RShoes[ShoesIDHighlighted].StaticMesh);
+						CurrentLeftShoe->AttachSocketName = LShoeSocket;
+
+						CurrentRightShoe->SetStaticMesh(RShoes[ShoesIDHighlighted].StaticMesh);
+						CurrentRightShoe->AttachSocketName = RShoeSocket;
+
+						ColourWheelEnabled = RShoes[ShoesIDHighlighted]._ColorWheel;
+						
+
+						ModifiedMesh = CurrentLeftShoe;
+						MeshMaterialInstance1 = ModifiedMesh->CreateDynamicMaterialInstance(0,RShoes[ShoesIDHighlighted].Material);
+						ModifiedMesh = CurrentRightShoe;
+						MeshMaterialInstance2 = ModifiedMesh->CreateDynamicMaterialInstance(0, RShoes[ShoesIDHighlighted].Material);
+
+
+						ColorWheelRotation = 0;
 						UpdateWidgets(ClothingOptionHighlighted);
 					}
 				}
@@ -350,8 +402,8 @@ void ALobbyCharacter::BottomButton()
 
 
 
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, FString::Printf(TEXT("Character Creation: x: %i"), CharacterCreationID));
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, FString::Printf(TEXT("Clothing Option: x: %i"), ClothingOptionHighlighted));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, FString::Printf(TEXT("Character Creation: x: %i"), CharacterCreationID));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, FString::Printf(TEXT("Clothing Option: x: %i"), ClothingOptionHighlighted));
 }
 
 void ALobbyCharacter::RightButton()
@@ -359,8 +411,8 @@ void ALobbyCharacter::RightButton()
 	TransitionBack(CharacterCreationID);
 	CharacterCreationID--;
 
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Character Creation: x: %i"), CharacterCreationID));
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Clothing Option: x: %i"), ClothingOptionHighlighted));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Character Creation: x: %i"), CharacterCreationID));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Clothing Option: x: %i"), ClothingOptionHighlighted));
 
 	if (CharacterCreationID < 0) { CharacterCreationID = 0; }
 }
@@ -375,12 +427,57 @@ void ALobbyCharacter::MoveForward(float axisValue)
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("axisValue: x: %f"), axisValue));
 }
 
+void ALobbyCharacter::MoveRight(float axisValue)
+{
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("axisValue: x: %f"), axisValue));
+	if (ColourWheelEnabled)
+	{
+		if (axisValue > -.25)
+		{
+			ColorWheelRotation += _Dt * 30;
+			if (ColorWheelRotation > 359)
+			{
+				ColorWheelRotation = 0;
+			}
+		}
+
+		if (axisValue < .25)
+		{
+			ColorWheelRotation -= _Dt * 30;
+			if (ColorWheelRotation < 0)
+			{
+				ColorWheelRotation = 359;
+			}
+		}
+
+
+		
+		//ModifiedMesh->CreateAndSetMaterialInstanceDynamic
+
+		UpdateColorWheel(true, ColorWheelRotation);
+
+		FLinearColor Colour;
+		Colour = UKismetMathLibrary::HSVToRGB(ColorWheelRotation, 1, 1, 1);
+
+
+		MeshMaterialInstance1->SetVectorParameterValue(FName(TEXT("Colour")), Colour);
+		MeshMaterialInstance2->SetVectorParameterValue(FName(TEXT("Colour")), Colour);
+
+
+		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Hue: x: %f"), ColorWheelRotation));
+	}
+
+	else
+		UpdateColorWheel(false, 0);
+
+}
 
 // Called to bind functionality to input
 void ALobbyCharacter::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 {
 	Super::SetupPlayerInputComponent(InputComponent);
 	InputComponent->BindAxis("MoveForward", this, &ALobbyCharacter::MoveForward);
+	InputComponent->BindAxis("MoveRight", this, &ALobbyCharacter::MoveRight);
 	InputComponent->BindAction("Bottom_Button", IE_Pressed, this, &ALobbyCharacter::BottomButton);
 	InputComponent->BindAction("Right_Button", IE_Pressed, this, &ALobbyCharacter::RightButton);
 	InputComponent->BindAction("Dpad_up", IE_Pressed, this,  &ALobbyCharacter::DPAD_UpButton);
