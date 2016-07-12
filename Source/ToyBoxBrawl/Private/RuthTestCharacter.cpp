@@ -54,7 +54,7 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 		if (LeftLegLimb._LimbActive) { damageAmount += 1; }
 		if (RightLegLimb._LimbActive) { damageAmount += 1; }
 
-
+		FTimerHandle UnusedHandle;
 
 
 		ARuthTestCharacter* Player = Cast<ARuthTestCharacter>(OtherActor);
@@ -147,11 +147,30 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 				return DamageCollisionType::DISMEMBERED;
 			}
 
+			//if (Player->bSliding)
+			//{
+			//	Jump();
+			//}
 
 			if (LimbsCurrentHp == _Limb._LimbHP)
 			{
+				if (Player->IsValidLowLevel() && Player->bSliding)
+				{
+					
+					GetCharacterMovement()->JumpZVelocity = 1100.0f;
+					GetCapsuleComponent()->SetCapsuleRadius(0, false);
+					GetCapsuleComponent()->SetCapsuleHalfHeight(0, false);
+				
+					
+					
+					Jump();
+					//GetWorldTimerManager().SetTimer(UnusedHandle,1,false,1)
+				}
+
 				return DamageCollisionType::NODAMAGE;
 			}
+
+		
 
 			else
 			{

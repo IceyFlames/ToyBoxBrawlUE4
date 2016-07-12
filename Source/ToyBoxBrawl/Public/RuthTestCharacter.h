@@ -87,7 +87,8 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	USkeletalMeshComponent* CharacterMesh;
 
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpecialAbility")
+	float SpecialAbilityCooldown;
 
 
 #pragma region Lists
