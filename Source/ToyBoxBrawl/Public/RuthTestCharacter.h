@@ -87,7 +87,7 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	USkeletalMeshComponent* CharacterMesh;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpecialAbility")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
 	float SpecialAbilityCooldown;
 
 
@@ -101,16 +101,16 @@ public:
 #pragma endregion
 
 #pragma region HitStrings
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
 	float _ArmKB;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
 	float _LegKB;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TargetSystem")
 	float _RotatePivot;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Collision Animation")
+	UPROPERTY(BlueprintReadWrite, Category = "Character Collision Animation")
 	TArray<AActor*> HitInvulnerability;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Collision Animation")
@@ -118,38 +118,42 @@ public:
 #pragma endregion
 
 #pragma region StructLimbs(Not using atm)
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
 	FLimb LeftHandLimb;							
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
 	FLimb RightHandLimb;								
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
 	FLimb LeftLegLimb;									
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
 	FLimb RightLegLimb;
 #pragma endregion
 
 #pragma region Weapon_Equipping_Properties
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Equipment")
+	UPROPERTY(BlueprintReadWrite, Category = "Equipment")
 	bool bLeftArmEquipped;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Equipment")
+	UPROPERTY(BlueprintReadWrite, Category = "Equipment")
 	bool bRightArmEquipped;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Equipment")
+	UPROPERTY(BlueprintReadWrite, Category = "Equipment")
 	bool bCanPickup;
 #pragma endregion
 
 #pragma region Animation_Properties
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animating")
+	UPROPERTY(BlueprintReadWrite, Category = "Animating")
 	bool bLeftPunch;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animating")
+	UPROPERTY(BlueprintReadWrite, Category = "Animating")
 	bool bRightPunch;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animating")
+	UPROPERTY(BlueprintReadWrite, Category = "Animating")
 	bool bLeftKick;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animating")
+	UPROPERTY(BlueprintReadWrite, Category = "Animating")
 	bool bRightKick;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animating")
+
+	UPROPERTY(BlueprintReadWrite, Category = "Animating")
 	bool bSliding;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Animating")
+	bool bRobotSpecial;
 
 #pragma endregion
 
