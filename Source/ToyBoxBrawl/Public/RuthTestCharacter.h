@@ -78,6 +78,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = FighterMech) //Retrieves the closest weapon from PickupArray
 	void TargetClosestPlayer(float Time);
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category= Mechanic)
+	void StunEffect(float Duration);
+
 	UPROPERTY(BlueprintReadWrite)
 	AActor* LeftHandWeapon;
 
@@ -89,6 +92,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
 	float SpecialAbilityCooldown;
+
+
+	UPROPERTY(BlueprintReadWrite, Category = "ControllerID")
+	int PlayerControllerID;
 
 
 #pragma region Lists
@@ -115,6 +122,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Collision Animation")
 	TArray<float> HitValues;
+
+
 #pragma endregion
 
 #pragma region StructLimbs(Not using atm)
