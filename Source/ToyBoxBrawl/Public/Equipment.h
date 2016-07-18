@@ -41,10 +41,10 @@ public:
 	void Deweaponise();
 
 	UFUNCTION(BlueprintCallable, Category = IteamEquipped)
-	void ProceduallyDestroyWeapon(float a_Damage);
-
-	UFUNCTION(BlueprintCallable, Category = IteamEquipped)
 	void DestroyWeapon();
+
+	UFUNCTION(BlueprintCallable, Category = IteamMisc)
+	void AssignMaterial(UMaterialInterface* MaterialReference);
 
 	UPROPERTY(BlueprintReadWrite)
 	USkeletalMeshComponent* MeshObject;

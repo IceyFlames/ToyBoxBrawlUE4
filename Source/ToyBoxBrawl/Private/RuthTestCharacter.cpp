@@ -116,11 +116,7 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 					if (!Equippable->_UnlimitedUses && Equippable->_WeaponStrength > 0)
 					{
 						Equippable->_NumOfUses -= .25f;
-						if (Equippable->_NumOfUses < 0)
-						{
-							Equippable->ProceduallyDestroyWeapon(1000.0f);
-						}
-						break;
+					
 					}
 				}
 
@@ -129,11 +125,7 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 				if (!Equippable->_UnlimitedUses && Equippable->_WeaponStrength > 0)
 				{
 					Equippable->_NumOfUses -= 1.0f;
-					if (Equippable->_NumOfUses < 0)
-					{
-						Equippable->ProceduallyDestroyWeapon(1000.0f);
-					}
-					break;
+				
 
 				}
 			}
@@ -164,6 +156,7 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 					
 					
 					Jump();
+					KnockUpEffect(.75f);
 					//GetWorldTimerManager().SetTimer(UnusedHandle,1,false,1)
 				}
 
@@ -182,6 +175,9 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 	}
 	return DamageCollisionType::NODAMAGE;
 }
+
+
+
 
 void ARuthTestCharacter::RetrieveClosestWeapon(AEquipment* &_WeaponRef)
 {

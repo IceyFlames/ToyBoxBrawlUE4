@@ -81,6 +81,10 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category= Mechanic)
 	void StunEffect(float Duration);
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = Mechanic)
+	void KnockUpEffect(float Duration);
+
+
 	UPROPERTY(BlueprintReadWrite)
 	AActor* LeftHandWeapon;
 

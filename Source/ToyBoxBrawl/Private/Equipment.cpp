@@ -121,22 +121,27 @@ void AEquipment::EquipmentPickedUp()
 	return;
 }
 
-void AEquipment::ProceduallyDestroyWeapon(float a_Damage)
-{
-	if (DamageMesh != nullptr)
-	{
-		DamageMesh->ApplyDamage(a_Damage, GetActorLocation(), FVector(0, 1, 0), 1);
-	
-	}
-		
-}
 
+void AEquipment::AssignMaterial(UMaterialInterface* MaterialReference)
+{
+
+	if (MeshObject != nullptr)
+	{
+		MeshObject->SetMaterial(0, MaterialReference);
+	}
+
+	if (StaticMeshObject != nullptr)
+	{
+		StaticMeshObject->SetMaterial(0, MaterialReference);
+	}
+
+	return;
+}
 
 void AEquipment::DestroyWeapon()
 {
 	if (_NumOfUses < 0)
 	{
-		
 		Destroy();
 	}
 }
