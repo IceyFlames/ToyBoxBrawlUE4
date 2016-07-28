@@ -148,18 +148,23 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 			{
 				if (Player->IsValidLowLevel() && Player->bSliding)
 				{
-					
-					GetCharacterMovement()->JumpZVelocity = 1100.0f;
-					GetCapsuleComponent()->SetCapsuleRadius(0, false);
-					GetCapsuleComponent()->SetCapsuleHalfHeight(0, false);
-				
-					
-					
-					Jump();
-					KnockUpEffect(.75f);
-					//GetWorldTimerManager().SetTimer(UnusedHandle,1,false,1)
-				}
+					for (int i = 0; i < Tags.Num(); i++)
+					{
+						if (!Tags[i].IsEqual("Targetting"))
+						{
+							GetCharacterMovement()->JumpZVelocity = 1100.0f;
+							GetCapsuleComponent()->SetCapsuleRadius(0, false);
+							GetCapsuleComponent()->SetCapsuleHalfHeight(0, false);
 
+
+
+							Jump();
+							KnockUpEffect(.75f);
+						}
+
+					}
+				}
+			
 				return DamageCollisionType::NODAMAGE;
 			}
 

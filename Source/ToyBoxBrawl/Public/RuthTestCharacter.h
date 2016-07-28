@@ -168,6 +168,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "Animating")
 	bool bRobotSpecial;
 
+	UPROPERTY(BlueprintReadWrite, Category = "Animating")
+	bool isAttacking;
+
 #pragma endregion
 
 
