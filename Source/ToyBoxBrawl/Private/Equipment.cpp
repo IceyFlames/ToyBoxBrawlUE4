@@ -33,7 +33,7 @@ void AEquipment::Tick( float DeltaTime )
 
 		if (forceStrength < 125)
 			Deweaponise();
-
+		
 		else
 			_WeaponStrength = _BaseDamage;
 	}
@@ -92,6 +92,8 @@ void AEquipment::ObjectThrown()
 
 	_WeaponThrown = true;
 	_WeaponStrength = 0.0f;
+
+	Deweaponise();
 
 	countdown = timer;
 }
