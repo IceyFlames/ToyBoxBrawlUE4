@@ -112,6 +112,7 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 				if (DistributedDamage)
 				{
 					_Limb._LimbHP -= Equippable->_WeaponStrength / damageAmount;
+					//HitInvulnerability.AddUnique(OtherActor);
 
 					if (!Equippable->_UnlimitedUses && Equippable->_WeaponStrength > 0)
 					{
