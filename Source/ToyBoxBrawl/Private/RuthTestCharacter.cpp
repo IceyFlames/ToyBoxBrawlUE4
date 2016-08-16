@@ -71,6 +71,7 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 				aforce_out = Player->_ArmKB;
 				if (DistributedDamage) { _Limb._LimbHP -= Player->RightHandLimb._WeaponDamage / damageAmount; break; }
 				_Limb._LimbHP -= Player->RightHandLimb._WeaponDamage;
+				Player->RightHandLimb._WeaponDamage = 0;
 				break;
 			}
 
@@ -81,6 +82,7 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 				aforce_out = Player->_ArmKB;
 				if (DistributedDamage) { _Limb._LimbHP -= Player->LeftHandLimb._WeaponDamage / damageAmount; break; }
 				_Limb._LimbHP -= Player->LeftHandLimb._WeaponDamage;
+				Player->LeftHandLimb._WeaponDamage = 0;
 				break;
 			}
 #pragma endregion
@@ -91,6 +93,7 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 				aforce_out = Player->_LegKB;
 				if (DistributedDamage) { _Limb._LimbHP -= Player->RightLegLimb._WeaponDamage / damageAmount; break; }
 				_Limb._LimbHP -= Player->RightLegLimb._WeaponDamage;
+				Player->RightLegLimb._WeaponDamage = 0;
 				break;
 			}
 #pragma endregion
@@ -101,6 +104,7 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 				aforce_out = Player->_LegKB;
 				if (DistributedDamage) { _Limb._LimbHP -= Player->LeftLegLimb._WeaponDamage / damageAmount; break; }
 				_Limb._LimbHP -= Player->LeftLegLimb._WeaponDamage;
+				Player->LeftLegLimb._WeaponDamage = 0;
 				break;
 			}
 #pragma endregion
@@ -119,16 +123,20 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 						Equippable->_NumOfUses -= .25f;
 					
 					}
+					break;
 				}
 
 
 				_Limb._LimbHP -= Equippable->_WeaponStrength;
-				if (!Equippable->_UnlimitedUses && Equippable->_WeaponStrength > 0)
-				{
-					Equippable->_NumOfUses -= 1.0f;
-				
+				Equippable->_WeaponStrength = 0;
 
-				}
+				break;
+				//if (!Equippable->_UnlimitedUses && Equippable->_WeaponStrength > 0)
+				//{
+				//	Equippable->_NumOfUses -= 1.0f;
+				//
+				//
+				//}
 			}
 #pragma endregion
 
@@ -182,6 +190,25 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 	return DamageCollisionType::NODAMAGE;
 }
 
+void ARuthTestCharacter::NullActorDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent)
+{
+	ARuthTestCharacter* Player = Cast<ARuthTestCharacter>(OtherActor);
+	AEquipment* Equippable = Cast<AEquipment>(OtherActor);
+
+	TArray<FName> Tags = OtherComponent->ComponentTags;
+	for (int i = 0; i < Tags.Num(); i++)
+	{
+		FName Tag = Tags[i];
+
+		if (Tag.IsEqual("RightArm")) { Player->RightHandLimb._WeaponDamage = 0; }
+		else if (Tag.IsEqual("LeftArm")) { Player->LeftHandLimb._WeaponDamage = 0; }
+		else if (Tag.IsEqual("RightLeg")) { Player->RightLegLimb._WeaponDamage = 0; }
+		else if (Tag.IsEqual("LeftLeg")) { Player->LeftLegLimb._WeaponDamage = 0; }
+		else if (Tag.IsEqual("Weapon")) { Equippable->_WeaponStrength = 0; }
+
+	}
+
+}
 
 
 
