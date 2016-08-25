@@ -16,6 +16,9 @@ ARuthTestCharacter::ARuthTestCharacter()
 void ARuthTestCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	_BlockDuration = _BlockingDurationMax;
+
 }
 
 // Called every frame
@@ -39,6 +42,31 @@ void ARuthTestCharacter::SetupPlayerInputComponent(class UInputComponent* InputC
 }
 
 
+void ARuthTestCharacter::CharacterBlock(float dt)
+{
+	
+	if (bBlocking)
+	{
+		_BlockDuration -= dt;
+		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Shield Duration: x: %f"), _BlockDuration));
+		if (_BlockDuration < 0)
+		{
+			bBlocking = false;
+			StunEffect(_BlockingStun);
+			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Stunned")));
+		}
+	}
+
+	else
+	{
+		_BlockDuration += dt * _RechargeRate;
+		if (_BlockDuration > _BlockingDurationMax) 
+		{
+			_BlockDuration = _BlockingDurationMax; 
+		}
+	}
+}
+
 DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrimitiveComponent* OtherComponent, UPARAM(ref)FLimb& _Limb, bool DistributedDamage, float &aforce_out)
 {
 
@@ -61,87 +89,89 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 		AEquipment* Equippable = Cast<AEquipment>(OtherActor);
 
 		TArray<FName> Tags = OtherComponent->ComponentTags;
-
-		for (int i = 0; i < Tags.Num(); i++)
+		if (!bBlocking)
 		{
-			FName Tag = Tags[i];
-
-			if (Tag.IsEqual("RightArm"))
+			for (int i = 0; i < Tags.Num(); i++)
 			{
-				aforce_out = Player->_ArmKB;
-				if (DistributedDamage) { _Limb._LimbHP -= Player->RightHandLimb._WeaponDamage / damageAmount; break; }
-				_Limb._LimbHP -= Player->RightHandLimb._WeaponDamage;
-				Player->RightHandLimb._WeaponDamage = 0;
-				break;
-			}
+				FName Tag = Tags[i];
 
-
-#pragma region Case: LeftArm
-			else if (Tag.IsEqual("LeftArm"))
-			{
-				aforce_out = Player->_ArmKB;
-				if (DistributedDamage) { _Limb._LimbHP -= Player->LeftHandLimb._WeaponDamage / damageAmount; break; }
-				_Limb._LimbHP -= Player->LeftHandLimb._WeaponDamage;
-				Player->LeftHandLimb._WeaponDamage = 0;
-				break;
-			}
-#pragma endregion
-
-#pragma region RightLeg
-			else if (Tag.IsEqual("RightLeg"))
-			{
-				aforce_out = Player->_LegKB;
-				if (DistributedDamage) { _Limb._LimbHP -= Player->RightLegLimb._WeaponDamage / damageAmount; break; }
-				_Limb._LimbHP -= Player->RightLegLimb._WeaponDamage;
-				Player->RightLegLimb._WeaponDamage = 0;
-				break;
-			}
-#pragma endregion
-
-#pragma region Case: LeftLeg
-			else if (Tag.IsEqual("LeftLeg"))
-			{
-				aforce_out = Player->_LegKB;
-				if (DistributedDamage) { _Limb._LimbHP -= Player->LeftLegLimb._WeaponDamage / damageAmount; break; }
-				_Limb._LimbHP -= Player->LeftLegLimb._WeaponDamage;
-				Player->LeftLegLimb._WeaponDamage = 0;
-				break;
-			}
-#pragma endregion
-
-#pragma region Case: Weapon
-			else if (Tag.IsEqual("Weapon"))
-			{
-				aforce_out = Equippable->_KnockbackForce;
-				if (DistributedDamage)
+				if (Tag.IsEqual("RightArm"))
 				{
-					_Limb._LimbHP -= Equippable->_WeaponStrength / damageAmount;
-					//HitInvulnerability.AddUnique(OtherActor);
-
-					if (!Equippable->_UnlimitedUses && Equippable->_WeaponStrength > 0)
-					{
-						Equippable->_NumOfUses -= .25f;
-					
-					}
+					aforce_out = Player->_ArmKB;
+					if (DistributedDamage) { _Limb._LimbHP -= Player->RightHandLimb._WeaponDamage / damageAmount; break; }
+					_Limb._LimbHP -= Player->RightHandLimb._WeaponDamage;
+					Player->RightHandLimb._WeaponDamage = 0;
 					break;
 				}
 
 
-				_Limb._LimbHP -= Equippable->_WeaponStrength;
-				Equippable->_WeaponStrength = 0;
-
-				break;
-				//if (!Equippable->_UnlimitedUses && Equippable->_WeaponStrength > 0)
-				//{
-				//	Equippable->_NumOfUses -= 1.0f;
-				//
-				//
-				//}
-			}
+#pragma region Case: LeftArm
+				else if (Tag.IsEqual("LeftArm"))
+				{
+					aforce_out = Player->_ArmKB;
+					if (DistributedDamage) { _Limb._LimbHP -= Player->LeftHandLimb._WeaponDamage / damageAmount; break; }
+					_Limb._LimbHP -= Player->LeftHandLimb._WeaponDamage;
+					Player->LeftHandLimb._WeaponDamage = 0;
+					break;
+				}
 #pragma endregion
 
-		}
+#pragma region RightLeg
+				else if (Tag.IsEqual("RightLeg"))
+				{
+					aforce_out = Player->_LegKB;
+					if (DistributedDamage) { _Limb._LimbHP -= Player->RightLegLimb._WeaponDamage / damageAmount; break; }
+					_Limb._LimbHP -= Player->RightLegLimb._WeaponDamage;
+					Player->RightLegLimb._WeaponDamage = 0;
+					break;
+				}
+#pragma endregion
 
+#pragma region Case: LeftLeg
+				else if (Tag.IsEqual("LeftLeg"))
+				{
+					aforce_out = Player->_LegKB;
+					if (DistributedDamage) { _Limb._LimbHP -= Player->LeftLegLimb._WeaponDamage / damageAmount; break; }
+					_Limb._LimbHP -= Player->LeftLegLimb._WeaponDamage;
+					Player->LeftLegLimb._WeaponDamage = 0;
+					break;
+				}
+#pragma endregion
+
+#pragma region Case: Weapon
+				else if (Tag.IsEqual("Weapon"))
+				{
+					aforce_out = Equippable->_KnockbackForce;
+					if (DistributedDamage)
+					{
+						_Limb._LimbHP -= Equippable->_WeaponStrength / damageAmount;
+						//HitInvulnerability.AddUnique(OtherActor);
+
+						if (!Equippable->_UnlimitedUses && Equippable->_WeaponStrength > 0)
+						{
+							Equippable->_NumOfUses -= .25f;
+
+						}
+						break;
+					}
+
+
+					_Limb._LimbHP -= Equippable->_WeaponStrength;
+					Equippable->_WeaponStrength = 0;
+
+					break;
+					//if (!Equippable->_UnlimitedUses && Equippable->_WeaponStrength > 0)
+					//{
+					//	Equippable->_NumOfUses -= 1.0f;
+					//
+					//
+					//}
+				}
+#pragma endregion
+
+			}
+
+		}
 			if (_Limb._LimbHP < 0)
 			{
 				_Limb._LimbActive = false;
@@ -166,7 +196,7 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 							GetCapsuleComponent()->SetCapsuleHalfHeight(0, false);
 
 
-
+							Player->bBlocking = false;
 							Jump();
 							KnockUpEffect(.75f);
 						}
@@ -181,6 +211,9 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 
 			else
 			{
+				_BlockDuration = _BlockingDurationMax;
+				isStunned = false;
+				StunEffect(0);
 				return DamageCollisionType::DAMAGED;
 			}
 
@@ -213,21 +246,24 @@ void ARuthTestCharacter::NullActorDamage(AActor* OtherActor, UPrimitiveComponent
 
 
 void ARuthTestCharacter::RetrieveClosestWeapon(AEquipment* &_WeaponRef)
-{
-	float LengthProduct = 9999999.0;
-	int Index = 0;
-
-	for (int i = 0; i < PickUpArray.Num(); i++) 
+{ 
+	if (PickUpArray.Num() > 0)
 	{
-		if (GetDistanceTo(PickUpArray[i]) < LengthProduct)
+		float LengthProduct = 9999999.0;
+		int Index = 0;
+
+		for (int i = 0; i < PickUpArray.Num(); i++)
 		{
-			LengthProduct = GetDistanceTo(PickUpArray[i]);
-			Index = i;
+			if (GetDistanceTo(PickUpArray[i]) < LengthProduct)
+			{
+				LengthProduct = GetDistanceTo(PickUpArray[i]);
+				Index = i;
+			}
 		}
+
+		if(PickUpArray[Index] != nullptr)
+		_WeaponRef = PickUpArray[Index];
 	}
-
-	_WeaponRef = PickUpArray[Index];
-
 }
 
 void ARuthTestCharacter::ThrowWeapon(AActor* WeaponRef, UPARAM(ref)bool &_ArmEquipped)

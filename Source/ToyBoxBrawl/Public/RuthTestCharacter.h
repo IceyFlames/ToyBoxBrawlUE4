@@ -85,6 +85,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = Mechanic)
 	void KnockUpEffect(float Duration);
 
+	UFUNCTION(BlueprintCallable, Category = Mechanic)
+	void CharacterBlock(float dt);
+
 
 	UPROPERTY(BlueprintReadWrite)
 	AActor* LeftHandWeapon;
@@ -98,9 +101,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
 	float SpecialAbilityCooldown;
 
-
 	UPROPERTY(BlueprintReadWrite, Category = "ControllerID")
 	int PlayerControllerID;
+
+
 
 
 #pragma region Lists
@@ -127,7 +131,20 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Collision Animation")
 	TArray<float> HitValues;
+#pragma endregion
 
+#pragma region Blocking
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blocking")
+	float _BlockingDurationMax;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Blocking")
+	float _BlockDuration;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blocking")
+	float _RechargeRate;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blocking")
+	float _BlockingStun;
 
 #pragma endregion
 
@@ -164,6 +181,9 @@ public:
 	bool bRightKick;
 
 	UPROPERTY(BlueprintReadWrite, Category = "Animating")
+	bool bBlocking;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Animating")
 	bool bSliding;
 
 	UPROPERTY(BlueprintReadWrite, Category = "Animating")
@@ -171,6 +191,16 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, Category = "Animating")
 	bool isAttacking;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Animating")
+	bool isStunned;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Animating")
+	bool bCurrentArmAttacks;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Animating")
+	bool bCurrentLegAttacks;
+
 
 #pragma endregion
 
