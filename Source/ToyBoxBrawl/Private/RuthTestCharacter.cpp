@@ -214,6 +214,7 @@ DamageCollisionType ARuthTestCharacter::LimbTakeDamage(AActor* OtherActor, UPrim
 				_BlockDuration = _BlockingDurationMax;
 				isStunned = false;
 				StunEffect(0);
+				//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Damage"));
 				return DamageCollisionType::DAMAGED;
 			}
 
