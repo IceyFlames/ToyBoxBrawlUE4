@@ -40,17 +40,17 @@ void ALobbyCharacter::CreatingCharacterProcess(int num)
 		CurrentHair->SetStaticMesh(RuthHairMesh);
 
 		CurrentTorso->SetStaticMesh(RTorso[0].StaticMesh);
-		//CurrentTorso->AttachSocketName = RTorso[0]._Socketname;
+		CurrentTorso->AttachSocketName = RTorso[0]._Socketname;
 		
 
 		//Left Shoe Socket
 		FName LShoeSocket = "l_Shoe";
 		FName RShoeSocket = "r_Shoe";
 		CurrentLeftShoe->SetStaticMesh(RShoes[0].StaticMesh);
-		//CurrentRightShoe->AttachSocketName = LShoeSocket;
+		CurrentRightShoe->AttachSocketName = LShoeSocket;
 
 		//Right Shoe Socket
-		//CurrentLeftShoe->AttachSocketName = RShoeSocket;
+		CurrentLeftShoe->AttachSocketName = RShoeSocket;
 		CurrentRightShoe->SetStaticMesh(RShoes[0].StaticMesh);
 
 	
@@ -104,9 +104,9 @@ void ALobbyCharacter::TransitionBack(int num)
 	{
 		case 0:
 		{
-			//CurrentMesh->SetSkeletalMesh(nullptr, true);
-			//CurrentHair->SetStaticMesh(nullptr);
-			//CurrentMesh->PlayAnimation(nullptr , true);
+			CurrentMesh->SetSkeletalMesh(nullptr, true);
+			CurrentHair->SetStaticMesh(nullptr);
+			CurrentMesh->PlayAnimation(nullptr , true);
 		}
 		break;
 
@@ -178,9 +178,9 @@ void ALobbyCharacter::UpdateClothingCounters(int _num)
 					if (HatIDHighlighted < 0)
 						HatIDHighlighted = RHats.Num() - 1;
 
-					//CurrentHat->SetStaticMesh(RHats[HatIDHighlighted].StaticMesh);
-					//CurrentHat->AttachSocketName = RHats[HatIDHighlighted]._Socketname;
-					//ColourWheelEnabled = RHats[HatIDHighlighted]._ColorWheel;
+					CurrentHat->SetStaticMesh(RHats[HatIDHighlighted].StaticMesh);
+					CurrentHat->AttachSocketName = RHats[HatIDHighlighted]._Socketname;
+					ColourWheelEnabled = RHats[HatIDHighlighted]._ColorWheel;
 					
 					ModifiedMesh = CurrentHat;
 					MeshMaterialInstance1 = ModifiedMesh->CreateDynamicMaterialInstance(0, RHats[HatIDHighlighted].Material);
@@ -205,9 +205,9 @@ void ALobbyCharacter::UpdateClothingCounters(int _num)
 							TorsoIDHightlighted = RTorso.Num() - 1;
 
 
-						//CurrentTorso->SetStaticMesh(RTorso[TorsoIDHightlighted].StaticMesh);
-						//CurrentTorso->AttachSocketName = RTorso[TorsoIDHightlighted]._Socketname;
-						//ColourWheelEnabled = RTorso[TorsoIDHightlighted]._ColorWheel;
+						CurrentTorso->SetStaticMesh(RTorso[TorsoIDHightlighted].StaticMesh);
+						CurrentTorso->AttachSocketName = RTorso[TorsoIDHightlighted]._Socketname;
+						ColourWheelEnabled = RTorso[TorsoIDHightlighted]._ColorWheel;
 						
 						
 						ModifiedMesh = CurrentTorso;
@@ -232,9 +232,9 @@ void ALobbyCharacter::UpdateClothingCounters(int _num)
 							PantsIDHightlighted = RPants.Num() - 1;
 
 
-						//CurrentTorso->SetStaticMesh(RPants[PantsIDHightlighted].StaticMesh);
-						//CurrentTorso->AttachSocketName = RPants[PantsIDHightlighted]._Socketname;
-						//ColourWheelEnabled = RPants[PantsIDHightlighted]._ColorWheel;
+						CurrentTorso->SetStaticMesh(RPants[PantsIDHightlighted].StaticMesh);
+						CurrentTorso->AttachSocketName = RPants[PantsIDHightlighted]._Socketname;
+						ColourWheelEnabled = RPants[PantsIDHightlighted]._ColorWheel;
 
 
 						ColorWheelRotation = 0;
@@ -258,11 +258,11 @@ void ALobbyCharacter::UpdateClothingCounters(int _num)
 						FName RShoeSocket = "r_Shoe";
 
 
-						//CurrentLeftShoe->SetStaticMesh(RShoes[ShoesIDHighlighted].StaticMesh);
-						//CurrentLeftShoe->AttachSocketName = LShoeSocket;
-						//
-						//CurrentRightShoe->SetStaticMesh(RShoes[ShoesIDHighlighted].StaticMesh);
-						//CurrentRightShoe->AttachSocketName = RShoeSocket;
+						CurrentLeftShoe->SetStaticMesh(RShoes[ShoesIDHighlighted].StaticMesh);
+						CurrentLeftShoe->AttachSocketName = LShoeSocket;
+						
+						CurrentRightShoe->SetStaticMesh(RShoes[ShoesIDHighlighted].StaticMesh);
+						CurrentRightShoe->AttachSocketName = RShoeSocket;
 
 						ColourWheelEnabled = RShoes[ShoesIDHighlighted]._ColorWheel;
 						
@@ -360,7 +360,7 @@ void ALobbyCharacter::UpdateCharacterPreview()
 			CurrentMesh->SetSkeletalMesh(RuthSkeletalMesh, true);
 			CurrentHair->SetStaticMesh(RuthHairMesh);
 			CurrentTorso->SetStaticMesh(RTorso[0].StaticMesh);
-			//CurrentTorso->AttachSocketName = RTorso[0]._Socketname;
+			CurrentTorso->AttachSocketName = RTorso[0]._Socketname;
 			CurrentMesh->PlayAnimation(RuthIdle, true);
 
 
@@ -368,10 +368,10 @@ void ALobbyCharacter::UpdateCharacterPreview()
 			FName LShoeSocket = "l_Shoe";
 			FName RShoeSocket = "r_Shoe";
 			CurrentLeftShoe->SetStaticMesh(RShoes[0].StaticMesh);
-			//CurrentRightShoe->AttachSocketName = LShoeSocket;
+			CurrentRightShoe->AttachSocketName = LShoeSocket;
 
 			//Right Shoe Socket
-			//CurrentLeftShoe->AttachSocketName = RShoeSocket;
+			CurrentLeftShoe->AttachSocketName = RShoeSocket;
 			CurrentRightShoe->SetStaticMesh(RShoes[0].StaticMesh);
 
 	
@@ -381,7 +381,9 @@ void ALobbyCharacter::UpdateCharacterPreview()
 
 		case 1:
 		{
+			//CurrentMesh->SetSkeletalMesh(nullptr, true);
 			CurrentMesh->SetSkeletalMesh(AEIOUSkeletalMesh, true);
+		
 			CurrentHair->SetStaticMesh(nullptr);
 			CurrentMesh->PlayAnimation(AEIOUIdle, true);
 			CurrentRightShoe->SetStaticMesh(nullptr);
