@@ -71,7 +71,7 @@ public:
 	void ThrowWeapon(AActor* WeaponRef, UPARAM(ref)bool &_ArmEquipped);
 
 	UFUNCTION(BlueprintCallable, Category = FighterMech) //True for Left Hand: False for Right Hand Equipped:
-	void EquipWeapon(UPoseableMeshComponent* HandSocket,AActor* WeaponRef,bool _ArmEquipped);
+	void EquipWeapon(USceneComponent* HandSocket,AActor* WeaponRef,bool _ArmEquipped);
 
 	UFUNCTION(BlueprintCallable, Category = FighterMech) //Retrieves the closest weapon from PickupArray
 	void RetrieveClosestWeapon(AEquipment* &_WeaponRef);

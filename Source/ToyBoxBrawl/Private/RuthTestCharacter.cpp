@@ -292,12 +292,13 @@ void ARuthTestCharacter::ThrowWeapon(AActor* WeaponRef, UPARAM(ref)bool &_ArmEqu
 	}
 }
 
-void ARuthTestCharacter::EquipWeapon(UPoseableMeshComponent* HandSocket, AActor* WeaponRef, bool _ArmEquipped)
+void ARuthTestCharacter::EquipWeapon(USceneComponent* HandSocket, AActor* WeaponRef, bool _ArmEquipped)
 {
 	if (_ArmEquipped)
 	{
 		if (!bLeftArmEquipped)
 		{
+			
 			WeaponRef->K2_AttachRootComponentTo(HandSocket, NAME_None, EAttachLocation::SnapToTarget, true);
 			bLeftArmEquipped = true;
 			LeftHandWeapon = WeaponRef;
@@ -308,6 +309,7 @@ void ARuthTestCharacter::EquipWeapon(UPoseableMeshComponent* HandSocket, AActor*
 	{
 		if (!bRightArmEquipped)
 		{
+			
 			WeaponRef->K2_AttachRootComponentTo(HandSocket, NAME_None, EAttachLocation::SnapToTarget, true);
 			bRightArmEquipped = true;
 			RightHandWeapon = WeaponRef;
