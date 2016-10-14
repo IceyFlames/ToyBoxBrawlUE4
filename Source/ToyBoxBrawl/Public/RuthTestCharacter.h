@@ -202,6 +202,9 @@ public:
 	bool bCurrentLegAttacks;
 
 
+	UPROPERTY(BlueprintReadWrite, Category = "Animating")
+	bool bIsWinner;
+
 #pragma endregion
 
 
