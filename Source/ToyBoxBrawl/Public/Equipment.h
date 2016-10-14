@@ -44,7 +44,7 @@ public:
 	void DestroyWeapon();
 
 	UFUNCTION(BlueprintCallable, Category = IteamMisc)
-	void AssignMaterial(UMaterialInterface* MaterialReference);
+	void AssignMaterial(UMaterialInterface* MaterialReference, int MaterialSlot);
 
 	UPROPERTY(BlueprintReadWrite)
 	USkeletalMeshComponent* MeshObject;

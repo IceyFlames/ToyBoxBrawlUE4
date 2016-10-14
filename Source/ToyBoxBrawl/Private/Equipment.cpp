@@ -124,17 +124,17 @@ void AEquipment::EquipmentPickedUp()
 }
 
 
-void AEquipment::AssignMaterial(UMaterialInterface* MaterialReference)
+void AEquipment::AssignMaterial(UMaterialInterface* MaterialReference, int MaterialSlot )
 {
 
 	if (MeshObject != nullptr)
 	{
-		MeshObject->SetMaterial(0, MaterialReference);
+		MeshObject->SetMaterial(MaterialSlot, MaterialReference);
 	}
 
 	if (StaticMeshObject != nullptr)
 	{
-		StaticMeshObject->SetMaterial(0, MaterialReference);
+		StaticMeshObject->SetMaterial(MaterialSlot, MaterialReference);
 	}
 
 	return;
